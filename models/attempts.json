@@ -1,0 +1,828 @@
+[
+  {
+    "attemptId": "zu3SxUKGaalOTrn-22MAe",
+    "quizId": "3HoArZ3wD0TQGT28wWjH2",
+    "userId": 2,
+    "details": [
+      {
+        "question": "In the V[n,q] setting, what type of codes are linear codes?",
+        "correctAnswer": "Codes with code words that form a sub-vector space of V[n,q]",
+        "userAnswer": "Codes with random code words",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "According to the text, what is the relationship between the minimum distance of a linear code and the minimal weight among all non-zero code words?",
+        "correctAnswer": "true",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "How are linear codes denoted in terms of their dimensions?",
+        "correctAnswer": "[n,k]-code",
+        "userAnswer": "blue",
+        "isCorrect": false,
+        "type": "short",
+        "aiFeedback": "No. The student's answer is not correct as it does not provide the notation for denoting linear codes in terms of their dimensions."
+      },
+      {
+        "question": "What are the two types of operations allowed for two linear codes to be considered equivalent?",
+        "correctAnswer": "Permutation of coordinate positions and multiplication by any non-zero scalar",
+        "userAnswer": "Permutation of coordinate positions and multiplication by any non-zero scalar",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the minimum distance for Hamming codes?",
+        "correctAnswer": "3",
+        "userAnswer": "2",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      }
+    ],
+    "score": 1,
+    "total": 5,
+    "timestamp": "2025-05-24T11:13:11.949Z"
+  },
+  {
+    "attemptId": "duKyvc2iCjKtZRBiUrBN9",
+    "quizId": "pU-7EbrIyB-0kS1hm4zHZ",
+    "userId": 3,
+    "details": [
+      {
+        "question": "A search in a list can be two times faster if every second element contains a reference to the element that is two places in front of it in the list.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "An element in a skip list contains references that are denoted by i≤k.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, an element at a level l should have a reference to the element that has at least l levels.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for inserting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, the expected time complexity for searching any set of elements is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for deleting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Can the same element in a skip list have references of different levels to some element?",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Randomness can be used in skip lists to maintain the distribution and frequency of element levels.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      }
+    ],
+    "score": 8,
+    "total": 8,
+    "timestamp": "2025-05-24T11:29:21.864Z"
+  },
+  {
+    "attemptId": "f-w9MneyOjDNgfepKPVpc",
+    "quizId": "pU-7EbrIyB-0kS1hm4zHZ",
+    "userId": 2,
+    "details": [
+      {
+        "question": "A search in a list can be two times faster if every second element contains a reference to the element that is two places in front of it in the list.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "An element in a skip list contains references that are denoted by i≤k.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, an element at a level l should have a reference to the element that has at least l levels.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for inserting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, the expected time complexity for searching any set of elements is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for deleting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Can the same element in a skip list have references of different levels to some element?",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Randomness can be used in skip lists to maintain the distribution and frequency of element levels.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      }
+    ],
+    "score": 3,
+    "total": 8,
+    "timestamp": "2025-05-24T11:32:04.595Z"
+  },
+  {
+    "attemptId": "pWNZIo4hjOrNKjLP5CBKl",
+    "quizId": "Bhsr19C503PBQM4ckd6Fw",
+    "userId": 3,
+    "details": [
+      {
+        "question": "What is the largest possible i when an element can contain a reference to the sublist that is k=2^i places in front of it?",
+        "correctAnswer": "i=lgn",
+        "userAnswer": "i=lgn",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the time complexity for inserting an element in a skip list?",
+        "correctAnswer": "O(logn",
+        "userAnswer": "O(logn)",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "How is the level of a new element determined when inserting it into a skip list?",
+        "correctAnswer": "Randomly based on a coin flip",
+        "userAnswer": "Randomly based on a coin flip",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What happens to the time complexity of searching in a skip list if the distribution and frequency of element levels are destroyed?",
+        "correctAnswer": "It becomes O(n)",
+        "userAnswer": "It becomes O(n)",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "How is the structure invariance assured during the insertion process in a skip list?",
+        "correctAnswer": "By descending to level 1 and having predecessors reference the new element",
+        "userAnswer": "By always inserting at the highest level",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      }
+    ],
+    "score": 3,
+    "total": 5,
+    "timestamp": "2025-05-24T11:39:49.534Z"
+  },
+  {
+    "attemptId": "xtWdgpqoA1ko5ZnqVRnO5",
+    "quizId": "zF-7VRP3c-oR7rGlLVILZ",
+    "userId": 5,
+    "details": [
+      {
+        "question": "What does the operation Insert(S, x) do?",
+        "correctAnswer": "Adds a new element x to S",
+        "userAnswer": "Deletes an element x from S",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the result of the operation Delete(S, x)?",
+        "correctAnswer": "S",
+        "userAnswer": "True",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What does the operation Rank(S, x) do?",
+        "correctAnswer": "Finds the position of x in the linear order of S",
+        "userAnswer": "Selects the i-th element in the linear order of S",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "Which operation is equivalent to DelMin(S)?",
+        "correctAnswer": "Delete(S, Select(S, 1))",
+        "userAnswer": "Rank(S, 1)",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the time complexity of the Rank operation?",
+        "correctAnswer": "O(logn)",
+        "userAnswer": "O(h)",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      }
+    ],
+    "score": 0,
+    "total": 5,
+    "timestamp": "2025-05-24T12:32:06.866Z"
+  },
+  {
+    "attemptId": "3M5CE_OojlysIQz6S1yo0",
+    "quizId": "zF-7VRP3c-oR7rGlLVILZ",
+    "userId": 10,
+    "details": [
+      {
+        "question": "What does the operation Insert(S, x) do?",
+        "correctAnswer": "Adds a new element x to S",
+        "userAnswer": "Adds a new element x to S",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the result of the operation Delete(S, x)?",
+        "correctAnswer": "S",
+        "userAnswer": "S",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What does the operation Rank(S, x) do?",
+        "correctAnswer": "Finds the position of x in the linear order of S",
+        "userAnswer": "Finds the position of x in the linear order of S",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "Which operation is equivalent to DelMin(S)?",
+        "correctAnswer": "Delete(S, Select(S, 1))",
+        "userAnswer": "Insert(S, Select(S, 1))",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the time complexity of the Rank operation?",
+        "correctAnswer": "O(logn)",
+        "userAnswer": "O(h)",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      }
+    ],
+    "score": 3,
+    "total": 5,
+    "timestamp": "2025-05-24T12:34:53.348Z"
+  },
+  {
+    "attemptId": "iA0TmPHsg0cefi6E7V2WA",
+    "quizId": "zF-7VRP3c-oR7rGlLVILZ",
+    "userId": 4,
+    "details": [
+      {
+        "question": "What does the operation Insert(S, x) do?",
+        "correctAnswer": "Adds a new element x to S",
+        "userAnswer": "Adds a new element x to S",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the result of the operation Delete(S, x)?",
+        "correctAnswer": "S",
+        "userAnswer": "Nothing",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What does the operation Rank(S, x) do?",
+        "correctAnswer": "Finds the position of x in the linear order of S",
+        "userAnswer": "Finds the position of x in the linear order of S",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "Which operation is equivalent to DelMin(S)?",
+        "correctAnswer": "Delete(S, Select(S, 1))",
+        "userAnswer": "Insert(S, Select(S, 1))",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the time complexity of the Rank operation?",
+        "correctAnswer": "O(logn)",
+        "userAnswer": "O(n)",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      }
+    ],
+    "score": 2,
+    "total": 5,
+    "timestamp": "2025-05-24T12:38:49.574Z"
+  },
+  {
+    "attemptId": "3fGnn3maaq8g3I0zdgMzO",
+    "quizId": "pU-7EbrIyB-0kS1hm4zHZ",
+    "userId": 2,
+    "details": [
+      {
+        "question": "A search in a list can be two times faster if every second element contains a reference to the element that is two places in front of it in the list.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "An element in a skip list contains references that are denoted by i≤k.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, an element at a level l should have a reference to the element that has at least l levels.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for inserting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, the expected time complexity for searching any set of elements is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for deleting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Can the same element in a skip list have references of different levels to some element?",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Randomness can be used in skip lists to maintain the distribution and frequency of element levels.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      }
+    ],
+    "score": 8,
+    "total": 8,
+    "timestamp": "2025-05-24T12:43:08.309Z"
+  },
+  {
+    "attemptId": "E5sqeplo33DkfHyhDGosP",
+    "quizId": "pU-7EbrIyB-0kS1hm4zHZ",
+    "userId": 4,
+    "details": [
+      {
+        "question": "A search in a list can be two times faster if every second element contains a reference to the element that is two places in front of it in the list.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "An element in a skip list contains references that are denoted by i≤k.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, an element at a level l should have a reference to the element that has at least l levels.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for inserting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, the expected time complexity for searching any set of elements is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for deleting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Can the same element in a skip list have references of different levels to some element?",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Randomness can be used in skip lists to maintain the distribution and frequency of element levels.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      }
+    ],
+    "score": 8,
+    "total": 8,
+    "timestamp": "2025-05-24T12:45:28.460Z"
+  },
+  {
+    "attemptId": "MMMv81Jl6XCmzlDsGEmGU",
+    "quizId": "pU-7EbrIyB-0kS1hm4zHZ",
+    "userId": 2,
+    "details": [
+      {
+        "question": "A search in a list can be two times faster if every second element contains a reference to the element that is two places in front of it in the list.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "An element in a skip list contains references that are denoted by i≤k.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, an element at a level l should have a reference to the element that has at least l levels.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for inserting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a skip list, the expected time complexity for searching any set of elements is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The time complexity for deleting an element in a skip list is O(logn).",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Can the same element in a skip list have references of different levels to some element?",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "Randomness can be used in skip lists to maintain the distribution and frequency of element levels.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      }
+    ],
+    "score": 0,
+    "total": 8,
+    "timestamp": "2025-05-24T12:46:31.045Z"
+  },
+  {
+    "attemptId": "zKx_nqvDYUI-HjshtTu6h",
+    "quizId": "wEOCD0cGC8dB2fZkAwJ1G",
+    "userId": 3,
+    "details": [
+      {
+        "question": "What is the focus of COBIT 2019 MEA01?",
+        "correctAnswer": "Monitoring IT performance against objectives",
+        "userAnswer": "Setting up IT systems",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What does Process Mining primarily aim to do?",
+        "correctAnswer": "Extract and analyze business process flows from event logs",
+        "userAnswer": "Extract and analyze business process flows from event logs",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "How does process mining work at a high level?",
+        "correctAnswer": "Extract, reconstruct, and analyze",
+        "userAnswer": "No idea man",
+        "isCorrect": false,
+        "type": "short",
+        "aiFeedback": "No. The student's answer is not correct or close enough to be accepted as it does not provide any relevant information about how process mining works."
+      },
+      {
+        "question": "What is one of the key capabilities of process mining tools related to process discovery?",
+        "correctAnswer": "Automated Process Discovery",
+        "userAnswer": "Customer Relationship Management",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "In a call center example, what did process mining tools help identify regarding workload distribution?",
+        "correctAnswer": "How work was distributed among call center resources",
+        "userAnswer": "Workload of people",
+        "isCorrect": false,
+        "type": "short",
+        "aiFeedback": "No. The student's answer is not specific enough as it does not mention how the work was distributed among call center resources."
+      }
+    ],
+    "score": 1,
+    "total": 5,
+    "timestamp": "2025-05-24T21:39:38.120Z"
+  },
+  {
+    "attemptId": "GO-PBJrE5CN-0W0FPn5_5",
+    "quizId": "3tqADOoVnPWfCuD9n6LGC",
+    "userId": 11,
+    "details": [
+      {
+        "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[4 1]\n[2 3]",
+        "correctAnswer": "False",
+        "userAnswer": "True",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[3 -1]\n[5 -2]",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[8 13]\n[-5 -9]",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[1/2 -1/2]\n[1/2 -1/2]",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The change of coordinate matrix from β to the standard basis for ℝ³ is A = \n[1 1 1]\n[1 0 1]\n[1 1 2]",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The matrix representation of the linear transformation L with respect to the standard basis for ℝ² is A = \n[0 0]\n[0 1]",
+        "correctAnswer": "False",
+        "userAnswer": "False",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The matrix representation of the linear transformation L with respect to the standard basis for ℝ² is A = \n[0 0]\n[0 2]",
+        "correctAnswer": "False",
+        "userAnswer": "True",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "The matrix representation of the linear transformation T with respect to the standard basis for ℝ² is B = \n[0 1]\n[0 0]",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "If U◦T is one-to-one, then T is one-to-one.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "If U◦T is onto, then U is onto.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "If U and T are one-to-one and onto, then U◦T is also.",
+        "correctAnswer": "True",
+        "userAnswer": "False",
+        "isCorrect": false,
+        "type": "truefalse",
+        "aiFeedback": null
+      },
+      {
+        "question": "L◦T= 0 but T◦L ≠ 0.",
+        "correctAnswer": "True",
+        "userAnswer": "True",
+        "isCorrect": true,
+        "type": "truefalse",
+        "aiFeedback": null
+      }
+    ],
+    "score": 6,
+    "total": 12,
+    "timestamp": "2025-05-24T21:44:12.343Z"
+  },
+  {
+    "attemptId": "7V3een5Bcraj_fMa8RTyB",
+    "quizId": "zF-7VRP3c-oR7rGlLVILZ",
+    "userId": 12,
+    "details": [
+      {
+        "question": "What does the operation Insert(S, x) do?",
+        "correctAnswer": "Adds a new element x to S",
+        "userAnswer": "Adds a new element x to S",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the result of the operation Delete(S, x)?",
+        "correctAnswer": "S",
+        "userAnswer": "True",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What does the operation Rank(S, x) do?",
+        "correctAnswer": "Finds the position of x in the linear order of S",
+        "userAnswer": "Finds the position of x in the linear order of S",
+        "isCorrect": true,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "Which operation is equivalent to DelMin(S)?",
+        "correctAnswer": "Delete(S, Select(S, 1))",
+        "userAnswer": "Select(S, 1)",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      },
+      {
+        "question": "What is the time complexity of the Rank operation?",
+        "correctAnswer": "O(logn)",
+        "userAnswer": "O(1)",
+        "isCorrect": false,
+        "type": "mcq",
+        "aiFeedback": null
+      }
+    ],
+    "score": 2,
+    "total": 5,
+    "timestamp": "2025-05-24T21:46:28.957Z"
+  }
+]

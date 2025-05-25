@@ -1,0 +1,26 @@
+[
+  {
+    "id": 101,
+    "title": "BIO 101: Foundations of Biology",
+    "code": "BIO101",
+    "description": "Introductory course on cellular and molecular biology.",
+    "professorId": 1,
+    "studentIds": [2,3,4,5,6,7,8]
+  },
+  {
+    "id": 102,
+    "title": "MATH 201: Advanced Calculus",
+    "code": "MATH201",
+    "description": "In-depth study of multivariable calculus and differential equations.",
+    "professorId": 1,
+    "studentIds": [9,10,11,12,13,14,15]
+  },
+  {
+    "id": 103,
+    "title": "LIT 301: Modern Literature",
+    "code": "LIT301",
+    "description": "Exploration of 20th-century prose and poetry.",
+    "professorId": 1,
+    "studentIds": [16,17,18,19,20,21]
+  }
+]

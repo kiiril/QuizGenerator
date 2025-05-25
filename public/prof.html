@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>StudyQuiz Pro – Professor Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .card-clickable { cursor: pointer; }
+        .card-clickable:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg py-3 nav-glass fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">StudyQuiz Pro</a>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container my-5 pt-5">
+    <!-- Courses Grid -->
+    <section id="coursesSection">
+        <h2 class="fw-bold mb-4">Your Courses</h2>
+        <div id="coursesRow" class="row g-4"></div>
+    </section>
+
+    <!-- Course Details -->
+    <section id="detailsSection" class="d-none">
+        <button id="backBtn" class="btn btn-link mb-3"><i class="fas fa-arrow-left"></i> Back to courses</button>
+        <h2 id="detailsTitle" class="fw-bold mb-3"></h2>
+        <!-- Course Analytics -->
+        <div class="row mb-4" id="analyticsSummary"></div>
+        <!-- Student Performance Charts -->
+        <div class="row mb-4">
+            <div class="col-md-6"><canvas id="studentAvgChart"></canvas></div>
+            <div class="col-md-6"><canvas id="completedChart"></canvas></div>
+        </div>
+        <!-- Quiz List -->
+        <div>
+            <h5>Quizzes</h5>
+            <ul id="quizList" class="list-group mb-4"></ul>
+        </div>
+        <!-- Detailed Quiz Analytics -->
+        <div id="quizDetail"></div>
+    </section>
+</main>
+
+<script>
+    // Retrieve logged-in user
+    let currentUser;
+    try { currentUser = JSON.parse(localStorage.getItem('user')); } catch { currentUser = null; }
+    if (!currentUser || currentUser.role !== 'professor') {
+        alert('Not logged in as a professor!');
+    }
+    const PROFESSOR_ID = currentUser.id;
+
+    const api = {
+        getCourses: () => fetch(`/api/courses/${PROFESSOR_ID}`)
+            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+            .then(d => d.courses),
+        getQuizzes: courseId => fetch(`/api/courses/${courseId}/quizzes`)
+            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+            .then(d => d.quizzes),
+        getStudents: courseId => fetch(`/api/courses/${courseId}/students`)
+            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+            .then(d => d.students)
+    };
+
+    const coursesRow = document.getElementById('coursesRow');
+    const coursesSec = document.getElementById('coursesSection');
+    const detailsSec = document.getElementById('detailsSection');
+    const backBtn = document.getElementById('backBtn');
+    const detailsTitle = document.getElementById('detailsTitle');
+    const analyticsSummary = document.getElementById('analyticsSummary');
+    const quizList = document.getElementById('quizList');
+    const quizDetail = document.getElementById('quizDetail');
+    let charts = [];
+
+    async function init() {
+        try {
+            // 1) fetch raw courses
+            const rawCourses = await api.getCourses();
+
+            // 2) for each course, fetch quizzes and inject quizCount
+            const courses = await Promise.all(
+                rawCourses.map(async course => {
+                    const quizzes = await api.getQuizzes(course.id);
+                    return {
+                        ...course,
+                        quizCount: quizzes.length
+                    };
+                })
+            );
+
+            // 3) render with the new quizCount field
+            renderCourses(courses);
+        } catch (err) {
+            coursesRow.innerHTML = `<div class="col-12 alert alert-danger">Failed to load courses.</div>`;
+            console.error('Error loading courses:', err);
+        }
+    }
+
+    function renderCourses(courses) {
+        coursesRow.innerHTML = '';
+        courses.forEach(course => {
+            const col = document.createElement('div');
+            col.className = 'col-md-4';
+            const card = document.createElement('div');
+            card.className = 'card shadow-sm card-clickable p-3';
+            card.innerHTML = `
+                <h5 class="fw-bold mb-2">${course.title}</h5>
+                <p class="mb-1">Students: <strong>${course.studentIds.length}</strong></p>
+                <p>Quizzes: <strong>${course.quizCount}</strong></p>
+            `;
+            card.onclick = () => showDetails(course);
+            col.appendChild(card);
+            coursesRow.appendChild(col);
+        });
+    }
+
+    async function showDetails(course) {
+        coursesSec.classList.add('d-none');
+        detailsSec.classList.remove('d-none');
+        detailsTitle.textContent = course.title;
+
+        try {
+            const [students, quizzes] = await Promise.all([
+                api.getStudents(course.id),
+                api.getQuizzes(course.id)
+            ]);
+
+            // Summary
+            analyticsSummary.innerHTML = `
+                <div class="col-md-4"><div class="card p-3 mb-3"><h6>Total Students</h6><p class="h4">${students.length}</p></div></div>
+                <div class="col-md-4"><div class="card p-3 mb-3"><h6>Quizzes Available</h6><p class="h4">${quizzes.length}</p></div></div>
+                <div class="col-md-4"><div class="card p-3 mb-3"><h6>Total Attempts</h6><p class="h4">${quizzes.reduce((sum,q)=>sum+q.totalAttempts,0)}</p></div></div>
+            `;
+
+            // Clear old charts and list
+            charts.forEach(c => c.destroy()); charts = [];
+            quizList.innerHTML = '';
+
+            // Student Avg Score Chart
+            const names = students.map(s => s.name);
+            const avgScores = students.map(s => s.avgScore);
+            const ctxAvg = document.getElementById('studentAvgChart').getContext('2d');
+            charts.push(new Chart(ctxAvg, {
+                type: 'bar',
+                data: { labels: names, datasets: [{ label: 'Avg Score %', data: avgScores }] }
+            }));
+
+            // Completed Quizzes Chart
+            const completed = students.map(s => s.completedQuizzes);
+            const ctxComp = document.getElementById('completedChart').getContext('2d');
+            charts.push(new Chart(ctxComp, {
+                type: 'line',
+                data: { labels: names, datasets: [{ label: 'Quizzes Completed', data: completed }] },
+                options: {
+                    scales: { y: { beginAtZero: true, suggestedMax: course.quizCount } },
+                    ticks: {
+                        stepSize: 1,
+                    }
+                },
+            }));
+
+            // Render quiz aggregates
+            quizzes.forEach(q => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.innerHTML = `
+                    <strong>${q.title}</strong><br>
+                    Attempts: ${q.totalAttempts}, Avg: ${q.averageScore}%
+                `;
+                quizList.appendChild(li);
+            });
+
+            quizDetail.innerHTML = '';
+        } catch (err) {
+            console.error('Error loading details:', err);
+            quizDetail.innerHTML = `<div class="alert alert-danger">Failed to load course details.</div>`;
+        }
+    }
+
+    backBtn.onclick = () => {
+        detailsSec.classList.add('d-none');
+        coursesSec.classList.remove('d-none');
+    };
+
+    init();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

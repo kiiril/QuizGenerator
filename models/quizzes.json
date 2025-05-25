@@ -1,0 +1,319 @@
+[
+  {
+    "id": "zF-7VRP3c-oR7rGlLVILZ",
+    "title": "Ordered Set Operations",
+    "userId": 1,
+    "courseId": 101,
+    "0": {
+      "question": "What does the operation Insert(S, x) do?",
+      "type": "mcq",
+      "options": [
+        "Adds a new element x to S",
+        "Deletes an element x from S",
+        "Finds an element in S that approximates x",
+        "Selects the i-th element in the linear order of S"
+      ],
+      "answer": "Adds a new element x to S",
+      "difficulty": "Easy"
+    },
+    "1": {
+      "question": "What is the result of the operation Delete(S, x)?",
+      "type": "mcq",
+      "options": [
+        "S",
+        "True",
+        "False",
+        "Nothing"
+      ],
+      "answer": "S",
+      "difficulty": "Easy"
+    },
+    "2": {
+      "question": "What does the operation Rank(S, x) do?",
+      "type": "mcq",
+      "options": [
+        "Finds the position of x in the linear order of S",
+        "Selects the i-th element in the linear order of S",
+        "Adds a new element x to S",
+        "Deletes an element x from S"
+      ],
+      "answer": "Finds the position of x in the linear order of S",
+      "difficulty": "Easy"
+    },
+    "3": {
+      "question": "Which operation is equivalent to DelMin(S)?",
+      "type": "mcq",
+      "options": [
+        "Delete(S, Select(S, 1))",
+        "Insert(S, Select(S, 1))",
+        "Select(S, 1)",
+        "Rank(S, 1)"
+      ],
+      "answer": "Delete(S, Select(S, 1))",
+      "difficulty": "Easy"
+    },
+    "4": {
+      "question": "What is the time complexity of the Rank operation?",
+      "type": "mcq",
+      "options": [
+        "O(h)",
+        "O(logn)",
+        "O(n)",
+        "O(1)"
+      ],
+      "answer": "O(logn)",
+      "difficulty": "Easy"
+    }
+  },
+  {
+    "id": "Bhsr19C503PBQM4ckd6Fw",
+    "title": "Skip List Basics",
+    "userId": 1,
+    "courseId": 102,
+    "0": {
+      "question": "What is the largest possible i when an element can contain a reference to the sublist that is k=2^i places in front of it?",
+      "type": "mcq",
+      "options": [
+        "i=1",
+        "i=2",
+        "i=lgn",
+        "i=2lgn"
+      ],
+      "answer": "i=lgn",
+      "difficulty": "Easy"
+    },
+    "1": {
+      "question": "What is the time complexity for inserting an element in a skip list?",
+      "type": "mcq",
+      "options": [
+        "O(n)",
+        "O(logn)",
+        "O(1)",
+        "O(n^2)"
+      ],
+      "answer": "O(logn",
+      "difficulty": "Easy"
+    },
+    "2": {
+      "question": "How is the level of a new element determined when inserting it into a skip list?",
+      "type": "mcq",
+      "options": [
+        "By its value",
+        "Randomly based on a coin flip",
+        "By comparing with existing elements",
+        "By its position in the list"
+      ],
+      "answer": "Randomly based on a coin flip",
+      "difficulty": "Easy"
+    },
+    "3": {
+      "question": "What happens to the time complexity of searching in a skip list if the distribution and frequency of element levels are destroyed?",
+      "type": "mcq",
+      "options": [
+        "It remains O(logn)",
+        "It becomes O(n)",
+        "It becomes O(1)",
+        "It becomes O(n^2)"
+      ],
+      "answer": "It becomes O(n)",
+      "difficulty": "Easy"
+    },
+    "4": {
+      "question": "How is the structure invariance assured during the insertion process in a skip list?",
+      "type": "mcq",
+      "options": [
+        "By always inserting at the highest level",
+        "By fixing the number of references",
+        "By descending to level 1 and having predecessors reference the new element",
+        "By randomly selecting a level for the new element"
+      ],
+      "answer": "By descending to level 1 and having predecessors reference the new element",
+      "difficulty": "Easy"
+    }
+  },
+  {
+    "id": "pU-7EbrIyB-0kS1hm4zHZ",
+    "title": "Skip List True/False Quiz",
+    "userId": 1,
+    "0": {
+      "question": "A search in a list can be two times faster if every second element contains a reference to the element that is two places in front of it in the list.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    },
+    "1": {
+      "question": "An element in a skip list contains references that are denoted by i≤k.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    },
+    "2": {
+      "question": "In a skip list, an element at a level l should have a reference to the element that has at least l levels.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    },
+    "3": {
+      "question": "The time complexity for inserting an element in a skip list is O(logn).",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    },
+    "4": {
+      "question": "In a skip list, the expected time complexity for searching any set of elements is O(logn).",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    },
+    "5": {
+      "question": "The time complexity for deleting an element in a skip list is O(logn).",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    },
+    "6": {
+      "question": "Can the same element in a skip list have references of different levels to some element?",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    },
+    "7": {
+      "question": "Randomness can be used in skip lists to maintain the distribution and frequency of element levels.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Medium"
+    }
+  },
+  {
+    "id": "wEOCD0cGC8dB2fZkAwJ1G",
+    "title": "Introduction to Process Mining",
+    "userId": 1,
+    "courseId": 103,
+    "0": {
+      "question": "What is the focus of COBIT 2019 MEA01?",
+      "type": "mcq",
+      "options": [
+        "Monitoring IT performance against objectives",
+        "Setting up IT systems",
+        "Analyzing customer data",
+        "Developing new software"
+      ],
+      "answer": "Monitoring IT performance against objectives",
+      "difficulty": "medium"
+    },
+    "1": {
+      "question": "What does Process Mining primarily aim to do?",
+      "type": "mcq",
+      "options": [
+        "Extract and analyze business process flows from event logs",
+        "Develop new IT systems",
+        "Improve cybersecurity measures",
+        "Create marketing campaigns"
+      ],
+      "answer": "Extract and analyze business process flows from event logs",
+      "difficulty": "medium"
+    },
+    "2": {
+      "question": "How does process mining work at a high level?",
+      "type": "short",
+      "answer": "Extract, reconstruct, and analyze",
+      "difficulty": "easy"
+    },
+    "3": {
+      "question": "What is one of the key capabilities of process mining tools related to process discovery?",
+      "type": "mcq",
+      "options": [
+        "Automated Process Discovery",
+        "Customer Relationship Management",
+        "Inventory Management",
+        "Sales Forecasting"
+      ],
+      "answer": "Automated Process Discovery",
+      "difficulty": "medium"
+    },
+    "4": {
+      "question": "In a call center example, what did process mining tools help identify regarding workload distribution?",
+      "type": "short",
+      "answer": "How work was distributed among call center resources",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "id": "3tqADOoVnPWfCuD9n6LGC",
+    "title": "Change of Basis True/False",
+    "userId": 1,
+    "courseId": 101,
+    "0": {
+      "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[4 1]\n[2 3]",
+      "type": "truefalse",
+      "answer": "False",
+      "difficulty": "Hard"
+    },
+    "1": {
+      "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[3 -1]\n[5 -2]",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "2": {
+      "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[8 13]\n[-5 -9]",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "3": {
+      "question": "The change of coordinate matrix from β to β' for the given vectors is A = \n[1/2 -1/2]\n[1/2 -1/2]",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "4": {
+      "question": "The change of coordinate matrix from β to the standard basis for ℝ³ is A = \n[1 1 1]\n[1 0 1]\n[1 1 2]",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "5": {
+      "question": "The matrix representation of the linear transformation L with respect to the standard basis for ℝ² is A = \n[0 0]\n[0 1]",
+      "type": "truefalse",
+      "answer": "False",
+      "difficulty": "Hard"
+    },
+    "6": {
+      "question": "The matrix representation of the linear transformation L with respect to the standard basis for ℝ² is A = \n[0 0]\n[0 2]",
+      "type": "truefalse",
+      "answer": "False",
+      "difficulty": "Hard"
+    },
+    "7": {
+      "question": "The matrix representation of the linear transformation T with respect to the standard basis for ℝ² is B = \n[0 1]\n[0 0]",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "8": {
+      "question": "If U◦T is one-to-one, then T is one-to-one.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "9": {
+      "question": "If U◦T is onto, then U is onto.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "10": {
+      "question": "If U and T are one-to-one and onto, then U◦T is also.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    },
+    "11": {
+      "question": "L◦T= 0 but T◦L ≠ 0.",
+      "type": "truefalse",
+      "answer": "True",
+      "difficulty": "Hard"
+    }
+  }
+]

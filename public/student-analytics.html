@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LectureBoost Pro - Professor Analytics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .student-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .student-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .risk-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+        .engagement-meter {
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .intervention-log {
+            border-left: 3px solid #0d6efd;
+            padding-left: 1rem;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">LectureBoost Pro</a>
+            <div class="d-flex align-items-center">
+                <span class="text-white me-3">dr Marko Markovski</span>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        More
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Flag At-Risk Students</a></li>
+                        <li><a class="dropdown-item" href="#">Generate Class Report</a></li>
+                        <li><a class="dropdown-item" href="prof.html">Main Page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Student Analytics Section -->
+    <div class="container mt-4">
+        <div class="row g-4">
+            <!-- Student Overview -->
+            <div class="col-12">
+                <div class="dashboard-card shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>📚 Student Performance Dashboard</h5>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-secondary">All Students</button>
+                            <button class="btn btn-sm btn-outline-secondary">At-Risk</button>
+                            <button class="btn btn-sm btn-outline-secondary">Top Performers</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Student Table -->
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Last Quiz</th>
+                                    <th>Engagement</th>
+                                    <th>Progress</th>
+                                    <th>Risk Level</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr onclick="showStudentDetail('john')">
+                                    <td>John Doe</td>
+                                    <td>68%</td>
+                                    <td>
+                                        <div class="engagement-meter bg-light">
+                                            <div class="bg-success" style="width: 75%"></div>
+                                        </div>
+                                    </td>
+                                    <td>+12%</td>
+                                    <td>
+                                        <div class="risk-indicator bg-warning"></div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger">Flag</button>
+                                        <button class="btn btn-sm btn-outline-primary">Message</button>
+                                    </td>
+                                </tr>
+                                <!-- Add more student rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Analytics -->
+            <div class="col-md-6">
+                <div class="dashboard-card shadow-sm">
+                    <h5>📊 Class Comparison</h5>
+                    <canvas id="classChart" class="mt-3"></canvas>
+                </div>
+            </div>
+
+            <!-- Individual Student Profile -->
+            <div class="col-md-6">
+                <div class="dashboard-card shadow-sm">
+                    <h5>👤 Student Detail</h5>
+                    <div id="studentDetail" class="mt-3">
+                        <div class="text-center text-muted">Select a student to view details</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intervention History -->
+            <div class="col-12">
+                <div class="dashboard-card shadow-sm">
+                    <h5>⏳ Intervention History</h5>
+                    <div class="intervention-log mt-3">
+                        <div class="mb-2">
+                            <span class="badge bg-primary">2024-03-15</span>
+                            <span>Flagged John Doe for extra support</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="badge bg-success">2024-03-10</span>
+                            <span>Shared supplemental materials with class</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Detail Modal -->
+    <div class="modal fade" id="studentModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Student Profile: John Doe</h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Performance Trends</h6>
+                            <canvas id="studentChart"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Topic Mastery</h6>
+                            <canvas id="topicRadar"></canvas>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <h6>Recent Activity</h6>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Week 3 Quiz Attempt</span>
+                                    <span class="text-danger">Failed (48%)</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Chapter 2 Review</span>
+                                    <span class="text-success">Completed</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Class Comparison Chart
+        new Chart(document.getElementById('classChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Quiz 1', 'Quiz 2', 'Midterm', 'Quiz 3'],
+                datasets: [{
+                    label: 'Class Average',
+                    data: [72, 68, 65, 75],
+                    backgroundColor: 'rgba(13, 110, 253, 0.5)'
+                },
+                {
+                    label: 'Top Students',
+                    data: [92, 88, 90, 94],
+                    backgroundColor: 'rgba(25, 135, 84, 0.5)'
+                }]
+            }
+        });
+
+        // Student Detail Functions
+        function showStudentDetail(studentId) {
+            new bootstrap.Modal(document.getElementById('studentModal')).show();
+            
+            // Student Performance Chart
+            new Chart(document.getElementById('studentChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Performance',
+                        data: [65, 68, 48, 72],
+                        borderColor: '#0d6efd'
+                    }]
+                }
+            });
+
+            // Topic Radar Chart
+            new Chart(document.getElementById('topicRadar'), {
+                type: 'radar',
+                data: {
+                    labels: ['Algorithms', 'Data Structures', 'Complexity', 'Recursion'],
+                    datasets: [{
+                        label: 'Mastery Level',
+                        data: [65, 48, 52, 60],
+                        backgroundColor: 'rgba(13, 110, 253, 0.2)'
+                    }]
+                }
+            });
+        }
+
+        // Simulate live updates
+        setInterval(() => {
+            document.querySelectorAll('[data-grade]').forEach(element => {
+                const newGrade = Math.min(100, Math.max(0, 
+                    parseInt(element.textContent) + Math.floor(Math.random() * 5 - 2)
+                ));
+                element.textContent = newGrade + '%';
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

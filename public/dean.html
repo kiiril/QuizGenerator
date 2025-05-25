@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduAnalytics Pro - Faculty Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .data-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+            min-height: 200px;
+        }
+        .alert-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .metric-badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+        .hover-table tbody tr:hover {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">EduAnalytics Pro</a>
+            <div class="d-flex align-items-center">
+                <span class="text-white me-3">Faculty Admin Dashboard</span>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Menu
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="prototype.html">Student View</a></li>
+                        <li><a class="dropdown-item" href="prof.html">Professor View</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="logout()">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container mt-4">
+        <div class="row g-4">
+            <!-- Real-Time Summary -->
+            <div class="col-md-3">
+                <div class="data-card shadow-sm">
+                    <h6>Faculty Adoption Rate</h6>
+                    <div class="mt-3">
+                        <span class="fs-2">68%</span>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-success" style="width: 68%"></div>
+                        </div>
+                        <small class="text-muted">+12% this month</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="data-card shadow-sm">
+                    <h6>Active Courses</h6>
+                    <div class="mt-3">
+                        <span class="fs-2">23</span>
+                        <div class="mt-2">
+                            <span class="badge bg-primary metric-badge">5 New This Week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="data-card shadow-sm">
+                    <h6>Institutional Health Monitor</h6>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="alert-indicator bg-success"></div>
+                            <small>85% Courses Optimal</small>
+                        </div>
+                        <div class="col">
+                            <div class="alert-indicator bg-warning"></div>
+                            <small>10% Needs Attention</small>
+                        </div>
+                        <div class="col">
+                            <div class="alert-indicator bg-danger"></div>
+                            <small>5% Critical</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Analytics -->
+            <div class="col-md-8">
+                <div class="data-card shadow-sm">
+                    <h6>Course Performance Trends</h6>
+                    <canvas id="courseChart" class="mt-3"></canvas>
+                </div>
+            </div>
+
+            <!-- Faculty Engagement -->
+            <div class="col-md-4">
+                <div class="data-card shadow-sm">
+                    <h6>Department Engagement</h6>
+                    <table class="table hover-table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Usage</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Computer Science</td>
+                                <td>92%</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>Mathematics</td>
+                                <td>45%</td>
+                                <td><span class="badge bg-warning">Partial</span></td>
+                            </tr>
+                            <tr>
+                                <td>Physics</td>
+                                <td>32%</td>
+                                <td><span class="badge bg-danger">Low</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Student Performance -->
+            <div class="col-12">
+                <div class="data-card shadow-sm mb-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6>At-Risk Students Overview</h6>
+                        <select class="form-select w-25">
+                            <option>All Courses</option>
+                            <option>Computer Science</option>
+                            <option>Mathematics</option>
+                        </select>
+                    </div>
+                    <table class="table hover-table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Last Quiz Score</th>
+                                <th>Engagement Trend</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>Discrete Math</td>
+                                <td>48%</td>
+                                <td><span class="text-danger">▼ 22%</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary">Flag for Support</button></td>
+                            </tr>
+                            <tr>
+                                <td>Jane Doe</td>
+                                <td>Systems 1</td>
+                                <td>33%</td>
+                                <td><span class="text-danger">▼ 42%</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary">Flag for Support</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 mb-4">
+                <div class="data-card shadow-sm mb-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6>High Performing Students Overview</h6>
+                        <select class="form-select w-25">
+                            <option>All Courses</option>
+                            <option>Computer Science</option>
+                            <option>Mathematics</option>
+                        </select>
+                    </div>
+                    <table class="table hover-table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Last Quiz Score</th>
+                                <th>Engagement Trend</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>TCS 3</td>
+                                <td>95%</td>
+                                <td><span class="text-success">▲ 25%</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary">Flag for Praise</button></td>
+                            </tr>
+                            <tr>
+                                <td>Jane Doe</td>
+                                <td>Systems 3</td>
+                                <td>89%</td>
+                                <td><span class="text-success">▲ 20%</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary">Flag for Praise</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- System Integration -->
+            
+            
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Course Performance Chart
+        const ctx = document.getElementById('courseChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Average Scores',
+                    data: [65, 59, 80, 81, 56],
+                    borderColor: '#0d6efd',
+                    tension: 0.4
+                },
+                {
+                    label: 'Participation Rate',
+                    data: [75, 45, 60, 82, 69],
+                    borderColor: '#198754',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+
+        // Real-time updates simulation
+        setInterval(() => {
+            document.querySelectorAll('.metric-badge').forEach(badge => {
+                const random = Math.floor(Math.random() * 10);
+                badge.textContent = `${random} New This Week`;
+            });
+        }, 10000);
+
+        // Add authentication check
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user || user.role !== 'dean') {
+                window.location.href = 'loginPage.html';
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'loginPage.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyQuiz Pro - AI-Powered Learning</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(
+          135deg,
+          #4261ebd2 0%,
+          #a955f7b9 70%,
+          #764ba2 100%
+        );
+        --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      }
+
+      body {
+        background: #f8f9fa;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      .nav-glass {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-section {
+        background: var(--primary-gradient);
+        color: white;
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+
+      .quiz-card {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+      }
+
+      .quiz-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .progress-ring {
+        width: 60px;
+        height: 60px;
+      }
+
+      .question-card {
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+      }
+
+      .gamification-badge {
+        background: var(--success-gradient);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+      }
+
+      .animated-timer {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .metric-card {
+        transition: transform 0.2s;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .metric-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .bg-purple {
+        background: linear-gradient(135deg, #8a2be2, #4b0082);
+      }
+
+      .study-calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+      }
+
+      .calendar-day {
+        aspect-ratio: 1;
+        background: #e9ecef;
+        border-radius: 3px;
+      }
+
+      .calendar-day.active {
+        background: #667eea;
+      }
+
+      .ccard {
+        transition: transform 0.3s ease-in-out; /* Smooth transition */
+      }
+
+      .ccard:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg py-3 nav-glass fixed-top">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <i class="fas fa-brain me-2"></i>
+          <span class="fw-bold">StudyQuiz Pro</span>
+        </a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#home">Create</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#myQuizzes">My Quizzes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#history">History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#integration">LMS Connect</a>
+            </li>
+            <li class="nav-item" id="authSection">
+              <!-- Will be populated by script -->
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="container my-5 pt-5">
+      <!-- <section id="home" class="hero-section p-5 my-4">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h1 class="display-5 fw-bold mb-4">Transform Notes into Mastery</h1>
+            <p class="lead mb-4">
+              AI-powered quizzes with real-time progress tracking and LMS
+              integration
+            </p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-light" onclick="showUpload()">
+                <i class="fas fa-file-upload me-2"></i>Upload Notes
+              </button>
+              <button class="btn btn-outline-light" onclick="showEditor()">
+                <i class="fas fa-keyboard me-2"></i>Type Notes
+              </button>
+            </div>
+          </div>
+          <div class="col-md-6 text-center">
+            <img
+              src="data:image/svg+xml;base64,..."
+              alt="Quiz interface mockup"
+              class="img-fluid"
+            />
+          </div>
+        </div>
+      </section> -->
+      <section
+        id="home"
+        class="hero-section p-5 my-4 align-items-center justify-content-center text-center"
+        style="min-height: 70vh"
+      >
+        <div class="align-items-center">
+          <div class="pt-5">
+            <h1 class="display-5 fw-bold mb-5 pt-5">
+              Transform Notes into Mastery
+            </h1>
+            <p class="lead mb-4">
+              AI-powered quizzes with real-time progress tracking and LMS
+              integration.
+            </p>
+            <div class="gap-2 display-5">
+              <button class="btn btn-light btn-lg" onclick="showUpload()">
+                <i class="fas fa-file-upload me-2"></i>Upload Notes
+              </button>
+              <button
+                class="btn btn-outline-light btn-lg"
+                onclick="showEditor()"
+              >
+                <i class="fas fa-keyboard me-2"></i>Type Notes
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="container my-5">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+              <h4 class="fw-bold">AI-Powered Quiz Generation</h4>
+              <p>
+                Generate quizzes instantly from your notes with advanced AI
+                algorithms.
+              </p>
+            </div>
+            <div class="col-md-4">
+              <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+              <h4 class="fw-bold">Real-Time Progress Tracking</h4>
+              <p>
+                Track your learning progress and identify areas for improvement.
+              </p>
+            </div>
+            <div class="col-md-4">
+              <i class="fas fa-cloud fa-3x text-info mb-3"></i>
+              <h4 class="fw-bold">LMS Integration</h4>
+              <p>
+                Seamlessly integrate with your Learning Management System (LMS).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonials Section -->
+        <div class="bg-light py-5" style="border-radius: 15px">
+          <div class="container text-center">
+            <h2 class="fw-bold mb-4" style="color: black">
+              What Our Users Say
+            </h2>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                  <div class="card-body">
+                    <p class="text-muted">
+                      "StudyQuiz Pro has revolutionized the way I study. The
+                      AI-generated quizzes are spot on!"
+                    </p>
+                    <h6 class="fw-bold">- Sarah T.</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                  <div class="card-body">
+                    <p class="text-muted">
+                      "I love the progress tracking feature. It helps me stay on
+                      top of my learning goals."
+                    </p>
+                    <h6 class="fw-bold">- James L.</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                  <div class="card-body">
+                    <p class="text-muted">
+                      "The LMS integration is a game-changer for our school.
+                      Highly recommend it!"
+                    </p>
+                    <h6 class="fw-bold">- Principal A.</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+
+        <!-- Call-to-Action Section -->
+        <div
+          class="bg-primary text-white text-center py-5"
+          style="border-radius: 15px"
+        >
+          <div class="container">
+            <h2 class="fw-bold mb-4">Ready to Transform Your Learning?</h2>
+            <p class="lead mb-4">
+              Sign up today and start creating smarter quizzes with StudyQuiz
+              Pro.
+            </p>
+            <button class="btn btn-light btn-lg" onclick="showUpload()">
+              <i class="fas fa-rocket me-2"></i>Get Started Now
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Quiz Creation -->
+      <div class="card shadow-lg mb-4" id="quizCreator" style="display: none">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0">
+              <i class="fas fa-magic me-2"></i>Quiz Customization
+            </h3>
+            <div class="gamification-badge">AI Score: 92%</div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-md-8">
+              <div class="mb-4">
+                <label class="form-label fw-bold">Content Source</label>
+                <div class="btn-group w-100 shadow">
+                  <button
+                    class="btn btn-outline-primary active"
+                    onclick="toggleSource('upload')"
+                  >
+                    <i class="fas fa-file-pdf me-2"></i>Upload
+                  </button>
+                  <button
+                    class="btn btn-outline-primary"
+                    onclick="toggleSource('text')"
+                  >
+                    <i class="fas fa-keyboard me-2"></i>Text Input
+                  </button>
+                  <button
+                    class="btn btn-outline-primary"
+                    onclick="toggleSource('lms')"
+                  >
+                    <i class="fas fa-cloud me-2"></i>LMS Content
+                  </button>
+                </div>
+              </div>
+
+              <div id="uploadSection">
+                <div
+                  class="drop-zone border-2 border-dashed rounded-3 p-5 text-center mb-4"
+                >
+                  <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                  <p class="text-muted">Drag & drop or click to upload files</p>
+                  <input type="file" class="d-none" id="fileInput" />
+                </div>
+              </div>
+
+              <div id="textEditor" style="display: none">
+                <div class="editor-container bg-white rounded-3 p-3 shadow-sm">
+                  <div class="d-flex justify-content-between mb-3">
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-bold"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-list-ul"></i>
+                      </button>
+                    </div>
+                    <small class="text-muted">AI Analysis Active</small>
+                  </div>
+                  <textarea
+                    class="form-control border-0"
+                    rows="8"
+                    placeholder="Start typing or paste your notes here..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="sticky-top" style="top: 1rem">
+                <div class="mb-4">
+                  <label class="form-label fw-bold">Quiz Parameters</label>
+                  <div class="list-group">
+                    <div class="list-group-item">
+                      <div class="d-flex justify-content-between">
+                        <span>Question Types</span>
+                        <i class="fas fa-shuffle text-primary"></i>
+                      </div>
+                      <select class="form-select mt-2">
+                        <option>Mixed Format</option>
+                        <option>Multiple Choice</option>
+                        <option>True/False</option>
+                        <option>Short Answer</option>
+                      </select>
+                    </div>
+                    <div class="list-group-item">
+                      <div class="d-flex justify-content-between">
+                        <span>Difficulty</span>
+                        <i class="fas fa-brain text-primary"></i>
+                      </div>
+                      <div class="btn-group w-100 mt-2">
+                        <button class="btn btn-outline-primary active">
+                          Auto
+                        </button>
+                        <button class="btn btn-outline-primary">Easy</button>
+                        <button class="btn btn-outline-primary">Medium</button>
+                        <button class="btn btn-outline-primary">Hard</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary w-100 py-3" id="generateQuizBtn">
+                  <i class="fas fa-sparkles me-2"></i>Generate Smart Quiz
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="quizDetails" class="container my-5" style="display: none">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <h2 class="fw-bold mb-4">
+              <i class="fas fa-info-circle me-2"></i>Quiz Details
+            </h2>
+
+            <!-- Shareable Link -->
+            <div class="mb-4">
+              <h5 class="fw-bold">
+                <i class="fas fa-share-alt me-2"></i>Share this Quiz
+              </h5>
+              <p class="share-link text-muted">
+                https://studyquizpro.com/quiz/12345
+              </p>
+              <button
+                class="btn btn-outline-primary btn-sm"
+                onclick="copyLink()"
+              >
+                Copy Link
+              </button>
+            </div>
+
+            <!-- Quiz Information -->
+            <div class="mb-4">
+              <h5 class="fw-bold">
+                <i class="fas fa-list-ul me-2"></i>Quiz Information
+              </h5>
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Number of Questions</span>
+                  <span class="fw-bold" id="quizQuestionCount"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Question Types</span>
+                  <span class="fw-bold" id="quizQuestionTypes"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Difficulty</span>
+                  <span class="fw-bold" id="quizDifficulty"></span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Start Quiz Button -->
+            <div class="text-center">
+              <button class="btn btn-primary btn-lg" onclick="startQuiz()">
+                <i class="fas fa-play me-2"></i>Start Quiz
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="quizSection" class="container my-5" style="display: none">
+        <div class="card shadow-lg">
+          <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Generated Quiz</h3>
+            <div class="timer mt-2" id="quizTimer">Time: 15:00</div>
+          </div>
+          <div class="card-body" id="quizQuestions">
+            <!-- Questions will be dynamically inserted here -->
+            <div id="noQuizzesPlaceholder" class="col-12 text-center py-5">
+              <div class="card shadow-sm border-0">
+                <div class="card-body">
+                  <i class="fas fa-inbox fa-4x text-muted mb-4"></i>
+                  <h4 class="fw-bold mb-3">No Quizzes Yet</h4>
+                  <p class="text-muted mb-4">
+                    You haven't created any quizzes yet. Get started by
+                    uploading your notes!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-success w-100" onclick="submitQuiz()">
+              Submit Quiz
+            </button>
+          </div>
+        </div>
+      </section>
+      <section id="myQuizzes" class="container my-5" style="display: none">
+        <h2 class="fw-bold mb-4">
+          <i class="fas fa-folder-open me-2"></i>My Quizzes
+        </h2>
+        <div class="row g-4">
+          <!-- Example Quiz Card -->
+          <div class="col-12">
+            <div
+              class="card shadow-sm border-0"
+              style="
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+              "
+            >
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="card-title fw-bold">Biology Basics</h5>
+                  <p class="text-muted mb-0">
+                    Created on: <span class="fw-bold">March 15, 2025</span>
+                  </p>
+                </div>
+                <ul
+                  class="list-group list-group-flush mb-3"
+                  style="color: white"
+                >
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Best Score</span>
+                    <span class="fw-bold">92%</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Attempts</span>
+                    <span class="fw-bold">5</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Difficulty</span>
+                    <span class="fw-bold">Medium</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Question Types</span>
+                    <span class="fw-bold">Multiple Choice, True/False</span>
+                  </li>
+                </ul>
+                <div class="d-flex justify-content-between">
+                  <button
+                    class="btn btn-outline-light btn-sm"
+                    onclick="copyQuizLink('https://studyquizpro.com/quiz/12345')"
+                  >
+                    <i class="fas fa-share-alt me-1"></i>Copy Link
+                  </button>
+                  <button
+                    class="btn btn-light btn-sm"
+                    onclick="startQuizFromMyQuizzes('Biology Basics')"
+                  >
+                    <i class="fas fa-play me-1"></i>Start Quiz
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Add more quiz cards dynamically -->
+        </div>
+      </section>
+      <section id="history" class="container my-5" style="display: none">
+        <h2 class="fw-bold mb-4"><i class="fas fa-history me-2"></i>History</h2>
+        <div class="row g-4">
+          <!-- Example History Card -->
+          <div class="col-12">
+            <div
+              class="card shadow-sm border-0"
+              style="
+                background: linear-gradient(135deg, #258a47, #1e9c85);
+                color: white;
+              "
+            >
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="card-title fw-bold">Biology Basics</h5>
+                  <p class="text-muted mb-0">
+                    Attempted on: <span class="fw-bold">March 16, 2025</span>
+                  </p>
+                </div>
+                <ul
+                  class="list-group list-group-flush mb-3"
+                  style="color: white"
+                >
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Score</span>
+                    <span class="fw-bold">85%</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Time Taken</span>
+                    <span class="fw-bold">12:34</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Difficulty</span>
+                    <span class="fw-bold">Medium</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between"
+                    style="background: transparent"
+                  >
+                    <span>Question Types</span>
+                    <span class="fw-bold">Multiple Choice, True/False</span>
+                  </li>
+                </ul>
+                <div class="text-center">
+                  <button
+                    class="btn btn-outline-light btn-sm"
+                    onclick="checkAnswers('Biology Basics')"
+                  >
+                    <i class="fas fa-eye me-1"></i>Check Answers
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Add more history cards dynamically -->
+        </div>
+      </section>
+
+      <section id="checkAnswers" class="container my-5" style="display: none">
+        <h2 class="fw-bold mb-4">
+          <i class="fas fa-eye me-2"></i>Check Answers
+        </h2>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h4 class="fw-bold" id="quizTitle">Quiz Title</h4>
+            <p class="text-muted mb-4">
+              Attempted on: <span id="attemptDate">March 16, 2025</span>
+            </p>
+
+            <!-- Questions and Answers -->
+            <div id="answersContainer">
+              <!-- Example Question -->
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                  <h5 class="fw-bold">
+                    1. What is the primary function of mitochondria?
+                  </h5>
+                  <p><strong>Your Answer:</strong> Energy production</p>
+                  <p><strong>Correct Answer:</strong> Energy production</p>
+                  <p class="text-success">
+                    <i class="fas fa-check-circle me-1"></i>Correct
+                  </p>
+                </div>
+              </div>
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                  <h5 class="fw-bold">
+                    2. Photosynthesis occurs in plant cells' chloroplasts.
+                  </h5>
+                  <p><strong>Your Answer:</strong> True</p>
+                  <p><strong>Correct Answer:</strong> True</p>
+                  <p class="text-success">
+                    <i class="fas fa-check-circle me-1"></i>Correct
+                  </p>
+                </div>
+              </div>
+              <!-- Add more questions dynamically -->
+            </div>
+
+            <!-- Back to History Button -->
+            <div class="text-center mt-4">
+              <button class="btn btn-primary" onclick="goBackToHistory()">
+                <i class="fas fa-arrow-left me-2"></i>Back to History
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Progress Dashboard -->
+      <section id="dashboard" class="my-5">
+        <div class="row g-4">
+          <div class="col-md-8">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="card-title">Performance</h5>
+                <div id="chartContainer">
+                  <canvas id="performanceChart" height="250"></canvas>
+                  <div
+                    id="noDataChart"
+                    class="text-center py-5"
+                    style="display: none"
+                  >
+                    <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                    <h5>No Quiz Data Available</h5>
+                    <p class="text-muted">
+                      Complete some quizzes to see your performance
+                    </p>
+                    <button
+                      class="btn btn-primary"
+                      onclick="showSection('myQuizzes')"
+                    >
+                      <i class="fas fa-file-upload me-2"></i>My Quizzes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="card-title">Recent Attempts</h5>
+                <div id="recentAttempts">
+                  <div id="noAttempts" class="text-center py-5">
+                    <i class="fas fa-tasks fa-3x text-muted mb-3"></i>
+                    <h5>No Attempts Yet</h5>
+                    <p class="text-muted">
+                      Try some quizzes to track your progress
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="progressDashboard"
+        class="container my-5"
+        style="display: none"
+      >
+        <!-- Progress Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2 class="fw-bold mb-1">Your Learning Journey</h2>
+            <p class="text-muted">Last updated: Today</p>
+          </div>
+          <div class="btn-group">
+            <button
+              class="btn btn-outline-primary active"
+              onclick="changeTimeRange('week')"
+            >
+              Week
+            </button>
+            <button
+              class="btn btn-outline-primary"
+              onclick="changeTimeRange('month')"
+            >
+              Month
+            </button>
+            <button
+              class="btn btn-outline-primary"
+              onclick="changeTimeRange('all')"
+            >
+              All Time
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Grid -->
+        <div class="row g-4">
+          <!-- Main Metrics -->
+          <div class="col-lg-8">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                <div class="row g-3 mb-4">
+                  <div class="col-md-4">
+                    <div
+                      class="metric-card text-center p-3 rounded-3 bg-primary text-white"
+                    >
+                      <div class="metric-value display-6 fw-bold">84%</div>
+                      <div class="metric-label">Average Score</div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      class="metric-card text-center p-3 rounded-3 bg-success text-white"
+                    >
+                      <div class="metric-value display-6 fw-bold">23h</div>
+                      <div class="metric-label">Study Time</div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      class="metric-card text-center p-3 rounded-3 bg-info text-white"
+                    >
+                      <div class="metric-value display-6 fw-bold">94</div>
+                      <div class="metric-label">Quizzes Taken</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Progress Chart -->
+                <div class="mb-4">
+                  <h5 class="fw-bold mb-3">
+                    <i class="fas fa-chart-line me-2"></i>Knowledge Retention
+                  </h5>
+                  <canvas id="progressChart" height="150"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar -->
+          <div class="col-lg-4">
+            <!-- Topic Breakdown -->
+            <div class="card shadow-sm mb-4">
+              <div class="card-body">
+                <h5 class="fw-bold mb-3">
+                  <i class="fas fa-cubes me-2"></i>Topic Mastery
+                </h5>
+                <div class="topic-list">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Molecular Biology</span>
+                    <div class="d-flex align-items-center">
+                      <div
+                        class="progress me-2"
+                        style="width: 120px; height: 8px"
+                      >
+                        <div
+                          class="progress-bar bg-success"
+                          style="width: 85%"
+                        ></div>
+                      </div>
+                      <small class="text-muted">85%</small>
+                    </div>
+                  </div>
+                  <!-- Add more topics -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Streaks & Achievements -->
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="fw-bold mb-3">
+                  <i class="fas fa-trophy me-2"></i>Achievements
+                </h5>
+                <div class="d-flex flex-wrap gap-2">
+                  <div class="badge bg-warning text-dark p-2">
+                    <i class="fas fa-fire me-1"></i>5-Day Streak
+                  </div>
+                  <div class="badge bg-purple text-white p-2">
+                    <i class="fas fa-brain me-1"></i>Quick Learner
+                  </div>
+                  <!-- Add more badges -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Analytics -->
+        <div class="row g-4 mt-2">
+          <!-- Study Calendar -->
+          <div class="col-md-6">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="fw-bold mb-3">
+                  <i class="fas fa-calendar-alt me-2"></i>Study Consistency
+                </h5>
+                <div class="study-calendar" id="heatmap"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Improvement Areas -->
+          <div class="col-md-6">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="fw-bold mb-3">
+                  <i class="fas fa-lightbulb me-2"></i>Recommendations
+                </h5>
+                <div class="list-group">
+                  <div class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-1">Organic Chemistry Basics</h6>
+                        <p class="mb-0 text-muted">Weak area (62% accuracy)</p>
+                      </div>
+                      <button class="btn btn-sm btn-outline-primary">
+                        Practice Now
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Add more recommendations -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="adminDashboardContainer" style="display: none"></section>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal fade" id="authModal">
+      <!-- Enhanced Auth Modal Content -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Add this at the beginning of your script
+      document.addEventListener("DOMContentLoaded", () => {
+        // Check authentication
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user) {
+          window.location.href = "loginPage.html";
+          return;
+        }
+
+        // Update auth section
+        const authSection = document.getElementById("authSection");
+        authSection.innerHTML = `
+          <div class="d-flex align-items-center">
+            <span class="me-2">${user.email}</span>
+            <button class="btn btn-outline-primary" onclick="logout()">Sign Out</button>
+          </div>
+        `;
+
+        // Add admin links based on role
+        // const adminLinks = document.getElementById('adminLinks');
+        // if (user.role === 'professor') {
+        //   adminLinks.innerHTML = `
+        //     <a class="nav-link" href="#" onclick="showAdminDashboard('prof')">Professor Dashboard</a>
+        //   `;
+        // } else if (user.role === 'dean') {
+        //   adminLinks.innerHTML = `
+        //     <a class="nav-link" href="#" onclick="showAdminDashboard('dean')">Dean Dashboard</a>
+        //   `;
+        // }
+
+        // Show default section
+        showSection("home");
+      });
+
+      function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+      //studdashboard
+      //       document.addEventListener('DOMContentLoaded', async function() {
+      //     try {
+      //         const response = await fetch('/api/attempts');
+      //         const data = await response.json();
+      //         const attempts = Array.isArray(data) ? data : data.attempts || [];
+
+      //         // Process data
+      //         const processed = attempts
+      //             .map(a => ({
+      //                 ...a,
+      //                 date: new Date(a.timestamp || a.dateAttempted),
+      //                 scorePct: a.total > 0 ? Math.round((a.score / a.total) * 100) : 0,
+      //                 quizName: a.quizTitle || `Quiz ${a.quizId?.slice(0, 4) || ''}`
+      //             }))
+      //             .sort((a, b) => b.date - a.date);
+
+      //         // Handle empty state
+      //         const noAttemptsElement = document.getElementById('noAttempts');
+      //         const noDataChartElement = document.getElementById('noDataChart');
+      //         const chartElement = document.getElementById('performanceChart');
+
+      //         if (processed.length === 0) {
+      //             noAttemptsElement.style.display = 'block';
+      //             noDataChartElement.style.display = 'block';
+      //             chartElement.style.display = 'none';
+      //             return;
+      //         } else {
+      //             noAttemptsElement.style.display = 'none';
+      //             noDataChartElement.style.display = 'none';
+      //             chartElement.style.display = 'block';
+      //         }
+
+      //         // Create chart
+      //         new Chart(chartElement.getContext('2d'), {
+      //             type: 'line',
+      //             data: {
+      //                 labels: processed.map(a => a.date.toLocaleDateString()),
+      //                 datasets: [{
+      //                     label: 'Score %',
+      //                     data: processed.map(a => a.scorePct),
+      //                     borderColor: '#4e73df',
+      //                     backgroundColor: 'rgba(78, 115, 223, 0.05)',
+      //                     tension: 0.3
+      //                 }]
+      //             },
+      //             options: {
+      //                 scales: { y: { beginAtZero: true, max: 100 } },
+      //                 plugins: {
+      //                     legend: { display: false }
+      //                 }
+      //             }
+      //         });
+
+      //         // Show recent attempts
+      //         document.getElementById('recentAttempts').innerHTML = processed
+      //             .slice(0, 5)
+      //             .map(a => `
+      //                 <div class="mb-3 p-2 border-bottom">
+      //                     <div class="d-flex justify-content-between">
+      //                         <strong>${a.quizName}</strong>
+      //                         <span class="badge ${getScoreBadgeClass(a.scorePct)}">
+      //                             ${a.scorePct}%
+      //                         </span>
+      //                     </div>
+      //                     <small class="text-muted">${a.date.toLocaleDateString()}</small>
+      //                     <div class="progress mt-2" style="height: 5px">
+      //                         <div class="progress-bar ${getScoreBarClass(a.scorePct)}"
+      //                              style="width: ${a.scorePct}%"></div>
+      //                     </div>
+      //                 </div>
+      //             `).join('');
+
+      //     } catch (error) {
+      //         console.error('Error loading dashboard:', error);
+      //         document.getElementById('recentAttempts').innerHTML = `
+      //             <div class="alert alert-danger">
+      //                 <i class="fas fa-exclamation-triangle me-1"></i>
+      //                 Failed to load data. Please refresh the page.
+      //             </div>
+      //         `;
+      //     }
+      // });
+
+      async function loadDashboard() {
+        console.log("=== loadDashboard() started ===");
+        try {
+          console.log("Fetching attempts data...");
+          const response = await fetch("/api/attempts");
+          const data = await response.json();
+          const attempts = Array.isArray(data) ? data : data.attempts || [];
+          console.log("Attempts data received:", attempts);
+
+          // Process data
+          const processed = attempts
+            .map((a) => ({
+              ...a,
+              date: new Date(a.timestamp || a.dateAttempted),
+              scorePct: a.total > 0 ? Math.round((a.score / a.total) * 100) : 0,
+              quizName: a.quizTitle || `Quiz ${a.quizId?.slice(0, 4) || ""}`,
+            }))
+            .sort((a, b) => b.date - a.date);
+          console.log("Processed attempts:", processed);
+
+          // Handle empty state
+          console.log("Getting DOM elements...");
+          // const noAttemptsElement = document.getElementById("noAttempts");
+          const noDataChartElement = document.getElementById("noDataChart");
+          const chartElement = document.getElementById("performanceChart");
+          
+          // console.log("noAttempts element:", noAttemptsElement);
+          console.log("noDataChart element:", noDataChartElement);
+          console.log("performanceChart element:", chartElement);
+          
+          // // Check if elements exist before accessing their properties
+          // if (!noDataChartElement || !chartElement) {
+          //   console.error("One or more required elements not found!");
+          //   console.error("Dashboard section visible?", document.getElementById("dashboard")?.style.display);
+          //   return;
+          // }
+
+          if (processed.length === 0) {
+            console.log("No attempts found, showing empty state");
+            // noAttemptsElement.style.display = "block";
+            noDataChartElement.style.display = "block";
+            chartElement.style.display = "none";
+            return;
+          } else {
+            console.log("Attempts found, hiding empty state and showing chart");
+            // noAttemptsElement.style.display = "none";
+            noDataChartElement.style.display = "none";
+            chartElement.style.display = "block";
+          }
+
+          // Destroy existing chart if it exists
+          console.log("Checking for existing chart...");
+          const existingChart = Chart.getChart(chartElement);
+          if (existingChart) {
+            console.log("Destroying existing chart");
+            existingChart.destroy();
+          }
+
+          // Create chart
+          console.log("Creating new chart...");
+
+          new Chart(chartElement.getContext("2d"), {
+            type: "line",
+            data: {
+              labels: processed.map((a) => a.date.toLocaleDateString()),
+              datasets: [
+                {
+                  label: "Score %",
+                  data: processed.map((a) => a.scorePct),
+                  borderColor: "#4e73df",
+                  backgroundColor: "rgba(78, 115, 223, 0.05)",
+                  tension: 0,
+                },
+              ],
+            },
+            options: {
+              scales: { y: { beginAtZero: true, suggestedMax: 105 } },
+              ticks: {
+                stepSize: 10 // Set the interval for y-axis ticks
+              },
+              plugins: {
+                legend: { display: false },
+              },
+            },
+          });
+          console.log("Chart created successfully");
+
+          // Show recent attempts
+          console.log("Updating recent attempts...");
+          const recentAttemptsElement = document.getElementById("recentAttempts");
+          if (!recentAttemptsElement) {
+            console.error("recentAttempts element not found!");
+            return;
+          }
+          
+          recentAttemptsElement.innerHTML = processed
+            .slice(0, 5)
+            .map(
+              (a) => `
+                <div class="mb-3 p-2 border-bottom">
+                    <div class="d-flex justify-content-between">
+                        <strong>${a.quizName}</strong>
+                        <span class="badge ${getScoreBadgeClass(a.scorePct)}">
+                            ${a.scorePct}%
+                        </span>
+                    </div>
+                    <small class="text-muted">${a.date.toLocaleDateString()}</small>
+                    <div class="progress mt-2" style="height: 5px">
+                        <div class="progress-bar ${getScoreBarClass(
+                          a.scorePct
+                        )}" 
+                             style="width: ${a.scorePct}%"></div>
+                    </div>
+                </div>
+            `
+            )
+            .join("");
+          console.log("Recent attempts updated");
+          console.log("=== loadDashboard() completed successfully ===");
+        } catch (error) {
+          console.error("Error loading dashboard:", error);
+          console.error("Error stack:", error.stack);
+          const recentAttemptsElement = document.getElementById("recentAttempts");
+          if (recentAttemptsElement) {
+            recentAttemptsElement.innerHTML = `
+              <div class="alert alert-danger">
+                  <i class="fas fa-exclamation-triangle me-1"></i>
+                  Failed to load data. Please refresh the page.
+              </div>
+            `;
+          } else {
+            console.error("Cannot show error message - recentAttempts element not found");
+          }
+        }
+      }
+
+      // Helper functions
+      function getScoreBadgeClass(score) {
+        if (score >= 70) return "bg-success";
+        if (score >= 50) return "bg-warning text-dark";
+        return "bg-danger";
+      }
+
+      function getScoreBarClass(score) {
+        if (score >= 70) return "bg-success";
+        if (score >= 50) return "bg-warning";
+        return "bg-danger";
+      }
+      //studddashboard
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "loginPage.html";
+      }
+      // Initialize state
+      let currentUser = null;
+      let quizData = [];
+      let quizId = null;
+
+      // Section management
+      function showSection(sectionId) {
+        const sections = [
+          "home",
+          "dashboard",
+          "quizCreator",
+          "quizDetails",
+          "quizSection",
+          "progressDashboard",
+          "myQuizzes",
+          "history",
+          "checkAnswers",
+          "adminDashboardContainer",
+        ];
+
+        if (sectionId === "history") {
+          loadHistory();
+        }
+        if (sectionId === "myQuizzes") {
+          loadMyQuizzes();
+        }
+        // Hide all main sections and admin dashboard
+        sections.forEach((id) => {
+          const element = document.getElementById(id);
+          if (element)
+            element.style.display = id === sectionId ? "block" : "none";
+        });
+        // Always clear admin dashboard content when leaving it
+        if (sectionId !== "adminDashboardContainer") {
+          const adminContainer = document.getElementById(
+            "adminDashboardContainer"
+          );
+          if (adminContainer) adminContainer.innerHTML = "";
+        }
+        // Special handling for dashboard role-based redirect
+        const user = JSON.parse(localStorage.getItem("user"));
+        const role = user ? user.role : null;
+        if (sectionId === "dashboard") {
+          console.log("Showing dashboard section, role:", role);
+          if (role === "student" || role === null) {
+            console.log("Student/null role - calling loadDashboard()");
+            loadDashboard();
+            document.getElementById("dashboard").style.display = "block";
+          } else {
+            if (role === "professor") {
+              showAdminDashboard("prof");
+            } else if (role === "dean") {
+              showAdminDashboard("dean");
+            }
+            return;
+          }
+        }
+        window.scrollTo(0, 0);
+      }
+
+      // Input source handling
+      // Input source handling
+      function toggleSource(source) {
+        document
+          .querySelectorAll("#uploadSection, #textEditor")
+          .forEach((el) => {
+            el.style.display = "none";
+          });
+        document.querySelectorAll(".btn-outline-primary").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        if (source === "upload") {
+          document.getElementById("uploadSection").style.display = "block";
+          event.target.classList.add("active");
+        } else if (source === "text") {
+          document.getElementById("textEditor").style.display = "block";
+          event.target.classList.add("active");
+        } else {
+          showLmsIntegration();
+        }
+      }
+
+      // File upload handling
+      const dropZone = document.querySelector(".drop-zone");
+      const fileInput = document.getElementById("fileInput");
+
+      dropZone.addEventListener("click", () => fileInput.click());
+
+      fileInput.addEventListener("change", (e) => {
+        handleFiles(e.target.files);
+      });
+
+      ["dragover", "dragenter"].forEach((event) => {
+        dropZone.addEventListener(event, (e) => {
+          e.preventDefault();
+          dropZone.style.borderColor = "#667eea";
+        });
+      });
+
+      ["dragleave", "dragend"].forEach((event) => {
+        dropZone.addEventListener(event, (e) => {
+          e.preventDefault();
+          dropZone.style.borderColor = "#dee2e6";
+        });
+      });
+
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        handleFiles(e.dataTransfer.files);
+        dropZone.style.borderColor = "#dee2e6";
+      });
+
+      function handleFiles(files) {
+        if (files.length > 0) {
+          // Simulate file processing
+          dropZone.innerHTML = `
+                    <div class="spinner-border text-primary mb-2"></div>
+                    <p>Analyzing ${files[0].name}...</p>
+                `;
+          setTimeout(() => {
+            document.querySelector(".btn-outline-primary.active").click();
+            showQuizCustomization();
+          }, 1500);
+        }
+      }
+
+      // Quiz flow controls
+      function showUpload() {
+        showSection("quizCreator");
+        toggleSource("upload");
+      }
+
+      function showEditor() {
+        showSection("quizCreator");
+        toggleSource("text");
+      }
+
+      function showQuizCustomization() {
+        document.getElementById("quizCreator").style.display = "block";
+      }
+
+      // Quiz timer
+      function startQuizTimer() {
+        let timeLeft = 900; // 15 minutes
+        const timerElement = document.querySelector(".timer");
+
+        const timer = setInterval(() => {
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+          timerElement.textContent = `Time: ${String(minutes).padStart(
+            2,
+            "0"
+          )}:${String(seconds).padStart(2, "0")}`;
+
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            showResults();
+          }
+          timeLeft--;
+        }, 1000);
+      }
+
+      // Results handling
+      function showResults() {
+        // Simulate results calculation
+        document.getElementById("quizSection").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+
+        // Update chart
+        const chart = Chart.getChart("progressChart");
+        if (chart) chart.destroy();
+        initializeProgressChart();
+      }
+
+      // Initialize chart
+      function initializeProgressChart() {
+        const ctx = document.getElementById("progressChart").getContext("2d");
+
+        // Check if a chart already exists on the canvas and destroy it
+        const existingChart = Chart.getChart("progressChart");
+        if (existingChart) {
+          existingChart.destroy();
+        }
+
+        // Create a new chart
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+            datasets: [
+              {
+                label: "Retention Rate",
+                data: [65, 78, 82, 89],
+                borderColor: "#667eea",
+                tension: 0.4,
+                fill: true,
+                backgroundColor: "rgba(102, 126, 234, 0.1)",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: true },
+            },
+          },
+        });
+      }
+
+      // Add this to handle navigation clicks
+      function setupNavigation() {
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute("href").substring(1);
+            showSection(sectionId);
+          });
+        });
+      }
+
+      // Update DOMContentLoaded listener
+      document.addEventListener("DOMContentLoaded", async () => {
+        initializeProgressChart();
+        setupNavigation();
+        showSection("home");
+        initHeatmap();
+        loadMyQuizzes();
+        loadHistory(); // Load history data
+        // loadDashboard(); // Removed - this is called when dashboard section is shown
+      });
+
+      // Initialize Chart
+      const ctx = document.getElementById("progressChart").getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+          datasets: [
+            {
+              label: "Retention Rate",
+              data: [65, 78, 82, 89],
+              borderColor: "#667eea",
+              tension: 0.4,
+            },
+          ],
+        },
+      });
+      function initHeatmap() {
+        const container = document.getElementById("heatmap");
+        const weeks = 8;
+
+        for (let w = 0; w < weeks; w++) {
+          const week = document.createElement("div");
+          week.className = "d-flex gap-1 mb-1";
+
+          for (let d = 0; d < 7; d++) {
+            const day = document.createElement("div");
+            day.className =
+              "calendar-day" + (Math.random() > 0.3 ? " active" : "");
+            week.appendChild(day);
+          }
+          container.appendChild(week);
+        }
+      }
+
+      // Initialize progress page
+      function initProgressPage() {
+        initHeatmap();
+        initializeProgressChart();
+      }
+
+      let quizTimer;
+      let timeLeft = 900; // 15 minutes in seconds
+
+      function generateMCQOptions(options) {
+        return options
+          .map(
+            (option, index) => `
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="q1">
+                    <label class="form-check-label">${option}</label>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      function generateTrueFalseOptions() {
+        return `
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="q2" id="q2true">
+                    <label class="btn btn-outline-success" for="q2true">True</label>
+                    <input type="radio" class="btn-check" name="q2" id="q2false">
+                    <label class="btn btn-outline-danger" for="q2false">False</label>
+                </div>
+            `;
+      }
+
+      function startTimer() {
+        quizTimer = setInterval(() => {
+          timeLeft--;
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+          document.getElementById("quizTimer").textContent = `Time: ${String(
+            minutes
+          ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+          if (timeLeft <= 0) {
+            clearInterval(quizTimer);
+            submitQuiz();
+          }
+        }, 1000);
+      }
+
+      function submitQuiz() {
+        console.log("=== submitQuiz() started ===");
+
+        clearInterval(quizTimer);
+        console.log("Timer cleared");
+
+        const quiz = window.generatedQuiz;
+        console.log("Quiz data:", quiz);
+        console.log("Quiz ID:", window.quizId);
+
+        if (!quiz) {
+          console.error("No quiz data found!");
+          return;
+        }
+
+        console.log("Number of questions:", quiz.length);
+
+        const answers = quiz.map((q, idx) => {
+          console.log(`Processing question ${idx}:`, q);
+
+          if (q.type === "mcq" || q.type === "truefalse") {
+            const selected = document.querySelector(
+              `input[name="q${idx}"]:checked`
+            );
+            console.log(`Question ${idx} - Selected element:`, selected);
+            const answer = selected ? selected.value : "";
+            console.log(`Question ${idx} - Answer value:`, answer);
+            return answer;
+          } else {
+            const input = document.querySelector(`input[name="q${idx}"]`);
+            console.log(`Question ${idx} - Input element:`, input);
+            const answer = input ? input.value : "";
+            console.log(`Question ${idx} - Answer value:`, answer);
+            return answer;
+          }
+        });
+
+        console.log("All answers collected:", answers);
+
+        const requestBody = { id: window.quizId, answers };
+        console.log("Request body to be sent:", requestBody);
+
+        console.log("Sending request to /api/submit-quiz...");
+
+        fetch("/api/submit-quiz", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestBody),
+        })
+          .then((res) => {
+            console.log("Response received:", res);
+            console.log("Response status:", res.status);
+            console.log("Response ok:", res.ok);
+
+            if (!res.ok) {
+              console.error("Response not OK. Status:", res.status);
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            return res.json();
+          })
+          .then((result) => {
+            console.log("Parsed result:", result);
+            showDetailedResults(result);
+          })
+          .catch((error) => {
+            console.error("Error in submitQuiz:", error);
+            console.error("Error details:", {
+              message: error.message,
+              stack: error.stack,
+            });
+            alert("Error submitting quiz: " + error.message);
+            showResults();
+          });
+
+        timeLeft = 900;
+        console.log("Timer reset to 900 seconds");
+        console.log("=== submitQuiz() ended ===");
+      }
+
+      function showDetailedResults(result) {
+        // Set title and date (optional: you can enhance this with real data)
+        document.getElementById("quizTitle").textContent = "Quiz Results";
+        document.getElementById("attemptDate").textContent =
+          new Date().toLocaleDateString();
+
+        const answersContainer = document.getElementById("answersContainer");
+        answersContainer.innerHTML = "";
+        result.details.forEach((d, idx) => {
+          const isCorrect = d.isCorrect;
+          let statusClass = isCorrect ? "text-success" : "text-danger";
+          let statusIcon = isCorrect ? "fa-check-circle" : "fa-times-circle";
+          let statusText = isCorrect ? "Correct" : "Incorrect";
+          let aiFeedbackHtml =
+            d.type === "short" && d.aiFeedback
+              ? `<p class='mb-1'><strong>AI Feedback:</strong> ${d.aiFeedback}</p>`
+              : "";
+          answersContainer.innerHTML += `
+            <div class="card mb-4 shadow-sm">
+              <div class="card-body">
+                <h5 class="fw-bold">${idx + 1}. ${d.question}</h5>
+                <p><strong>Your Answer:</strong> ${
+                  d.userAnswer || "<em>No answer</em>"
+                }</p>
+                <p><strong>Correct Answer:</strong> ${d.correctAnswer}</p>
+                ${aiFeedbackHtml}
+                <p class="${statusClass}"><i class="fas ${statusIcon} me-1"></i>${statusText}</p>
+              </div>
+            </div>
+          `;
+        });
+        showSection("checkAnswers");
+      }
+
+      function copyLink() {
+        const link = document.querySelector(".share-link").textContent;
+        navigator.clipboard.writeText(link).then(() => {
+          alert("Link copied to clipboard!");
+        });
+      }
+
+      function copyQuizLink(link) {
+        navigator.clipboard.writeText(link).then(() => {
+          alert("Quiz link copied to clipboard!");
+        });
+      }
+
+      //   function startQuizFromMyQuizzes(quizTitle) {
+      //     // Logic to load the quiz can be added here
+      //     showSection("quizSection");
+      //     startQuiz(); // Start the quiz
+      //   }
+
+      const quizzes = [
+        {
+          title: "Biology Basics",
+          bestScore: "92%",
+          attempts: 5,
+          dateCreated: "March 15, 2025",
+          difficulty: "Medium",
+          questionTypes: "Multiple Choice, True/False",
+          link: "https://studyquizpro.com/quiz/12345",
+        },
+        {
+          title: "Physics Fundamentals",
+          bestScore: "85%",
+          attempts: 3,
+          dateCreated: "March 10, 2025",
+          difficulty: "Hard",
+          questionTypes: "Multiple Choice",
+          link: "https://studyquizpro.com/quiz/67890",
+        },
+        {
+          title: "Chemistry Basics",
+          bestScore: "98%",
+          attempts: 7,
+          dateCreated: "March 5, 2025",
+          difficulty: "Easy",
+          questionTypes: "Multiple Choice, Short Answer",
+          link: "https://studyquizpro.com/quiz/24680",
+        },
+        {
+          title: "Mathematics Basics",
+          bestScore: "100%",
+          attempts: 10,
+          dateCreated: "March 1, 2025",
+          difficulty: "Medium",
+          questionTypes: "Multiple Choice, True/False",
+          link: "https://studyquizpro.com/quiz/13579",
+        },
+      ];
+
+      async function loadMyQuizzes() {
+        const myQuizzesContainer = document.querySelector("#myQuizzes .row");
+        myQuizzesContainer.innerHTML = "";
+        try {
+          const res = await fetch("/api/quizzes");
+          const data = await res.json();
+          const quizzes = data.quizzes || [];
+
+          // Add this empty state check
+          if (quizzes.length === 0) {
+            myQuizzesContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <i class="fas fa-inbox fa-4x text-muted mb-4"></i>
+                            <h4 class="fw-bold mb-3">No Quizzes Yet</h4>
+                            <p class="text-muted mb-4">
+                                You haven't created any quizzes yet. Get started by uploading your notes!
+                            </p>
+                            <button class="btn btn-primary" onclick="showUpload()">
+                                <i class="fas fa-file-upload me-2"></i>Create Your First Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+          }
+
+          quizzes.forEach((quiz) => {
+            // Quiz format: { id, 0: {...}, 1: {...}, ... }
+
+            const questionCount = Object.keys(quiz).filter(
+              (k) => !isNaN(Number(k))
+            ).length;
+
+            // Get types and difficulty from questions
+
+            let types = new Set();
+
+            let difficulty = new Set();
+
+            Object.keys(quiz).forEach((k) => {
+              if (!isNaN(Number(k))) {
+                if (quiz[k].type) types.add(quiz[k].type);
+
+                if (quiz[k].difficulty) difficulty.add(quiz[k].difficulty);
+              }
+            });
+
+            const typeMap = {
+              mcq: "Multiple Choice",
+              truefalse: "True/False",
+              short: "Short Answer",
+            };
+
+            const readableTypes = Array.from(types)
+              .map((t) => typeMap[t] || t)
+              .join(", ");
+
+            const readableDifficulty = Array.from(difficulty).join(", ");
+
+            const quizCard = `
+
+              <div class="col-12">
+
+                <div class="ccard card shadow-sm border-0" style="background: linear-gradient(135deg, #4261ebd2 0%, #a955f7b9 70%, #764ba2 100%); color: white;">
+
+                  <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title fw-bold">Quiz #${quiz.id}</h5>
+
+                      <p class="text-muted mb-0">ID: <span class="fw-bold">${quiz.id}</span></p>
+
+                    </div>
+
+                    <ul class="list-group list-group-flush mb-3" style="color: white;">
+
+                      <li class="list-group-item d-flex justify-content-between" style="background: transparent;">
+
+                        <span>Questions</span>
+
+                        <span class="fw-bold">${questionCount}</span>
+
+                      </li>
+
+                      <li class="list-group-item d-flex justify-content-between" style="background: transparent;">
+
+                        <span>Types</span>
+
+                        <span class="fw-bold">${readableTypes}</span>
+
+                      </li>
+
+                      <li class="list-group-item d-flex justify-content-between" style="background: transparent;">
+
+                        <span>Difficulty</span>
+
+                        <span class="fw-bold">${readableDifficulty}</span>
+
+                      </li>
+
+                    </ul>
+
+                    <div class="d-flex justify-content-between">
+
+                      <button class="btn btn-outline-light btn-sm" onclick="copyQuizLink('${window.location.origin}/quiz/${quiz.id}')">
+
+                        <i class="fas fa-share-alt me-1"></i>Copy Link
+
+                      </button>
+
+                      <button class="btn btn-light btn-sm" onclick="startQuizFromMyQuizzes('${quiz.id}')">
+
+                        <i class="fas fa-play me-1"></i>Start Quiz
+
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            `;
+
+            myQuizzesContainer.innerHTML += quizCard;
+          });
+        } catch (err) {
+          myQuizzesContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Failed to load quizzes. Please try again later.
+                </div>
+            </div>
+        `;
+        }
+      }
+
+      window.startQuizFromMyQuizzes = async function (quizId) {
+        console.log("=== startQuizFromMyQuizzes() called ===");
+        console.log("Quiz ID parameter:", quizId);
+
+        try {
+          console.log("Fetching quiz from:", `/api/quiz/${quizId}`);
+          const res = await fetch(`/api/quiz/${quizId}`);
+          console.log("Response status:", res.status, "OK:", res.ok);
+
+          const data = await res.json();
+          console.log("Quiz data received:", data);
+
+          let quiz = data.quiz;
+          console.log("Quiz object:", quiz);
+
+          // Convert to array if needed
+          if (!Array.isArray(quiz)) {
+            console.log("Quiz is not an array, converting...");
+            const keys = Object.keys(quiz).filter((k) => !isNaN(Number(k)));
+            quiz = keys
+              .sort((a, b) => Number(a) - Number(b))
+              .map((k) => quiz[k]);
+            console.log("Converted quiz to array:", quiz);
+          }
+
+          // Save quiz and id to global state for consistent submission
+          window.generatedQuiz = quiz;
+          window.quizId = quizId;
+
+          console.log("Quiz ID set to window.quizId:", window.quizId);
+          console.log(
+            "Quiz saved to window.generatedQuiz:",
+            window.generatedQuiz
+          );
+
+          // Render the quiz questions
+          const quizContainer = document.getElementById("quizQuestions");
+          quizContainer.innerHTML = "";
+          quiz.forEach((q, idx) => {
+            let html = `<div class="question-card mb-4 p-3 bg-white rounded shadow-sm">`;
+            html += `<p class="fw-bold mb-3">${idx + 1}. ${q.question}</p>`;
+            if (q.type === "mcq" && Array.isArray(q.options)) {
+              html += '<div class="ms-3">';
+              q.options.forEach((opt, i) => {
+                html += `<div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="q${idx}" value="${opt}">
+                  <label class="form-check-label">${opt}</label>
+                </div>`;
+              });
+              html += "</div>";
+            } else if (q.type === "truefalse") {
+              html += `<div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="q${idx}" id="q${idx}true" value="True">
+                <label class="btn btn-outline-success" for="q${idx}true">True</label>
+                <input type="radio" class="btn-check" name="q${idx}" id="q${idx}false" value="False">
+                <label class="btn btn-outline-danger" for="q${idx}false">False</label>
+              </div>`;
+            } else {
+              html += `<input type="text" class="form-control" name="q${idx}" placeholder="Your answer">`;
+            }
+            html += "</div>";
+            quizContainer.innerHTML += html;
+          });
+
+          console.log("Quiz questions rendered");
+          console.log("Final check - window.quizId:", window.quizId);
+
+          showSection("quizSection");
+          startTimer();
+
+          console.log("=== startQuizFromMyQuizzes() completed ===");
+        } catch (err) {
+          console.error("Error in startQuizFromMyQuizzes:", err);
+          alert("Failed to load quiz.");
+        }
+      };
+
+      const history = [
+        {
+          title: "Biology Basics",
+          score: "85%",
+          timeTaken: "12:34",
+          dateAttempted: "March 16, 2025",
+          difficulty: "Medium",
+          questionTypes: "Multiple Choice, True/False",
+        },
+        {
+          title: "Physics Fundamentals",
+          score: "78%",
+          timeTaken: "15:20",
+          dateAttempted: "March 14, 2025",
+          difficulty: "Hard",
+          questionTypes: "Multiple Choice",
+        },
+        {
+          title: "Chemistry Basics",
+          score: "92%",
+          timeTaken: "10:45",
+          dateAttempted: "March 12, 2025",
+          difficulty: "Easy",
+          questionTypes: "Multiple Choice, Short Answer",
+        },
+      ];
+
+      async function loadHistory() {
+        const historyContainer = document.querySelector("#history .row");
+        historyContainer.innerHTML = ""; // Clear existing content
+        try {
+          const res = await fetch("/api/attempts");
+          const data = await res.json();
+          let attempts = data.attempts || [];
+
+          // Sort attempts by date (newest first)
+          attempts = attempts.sort((a, b) => {
+            const dateA = new Date(a.dateAttempted || a.timestamp || 0);
+            const dateB = new Date(b.dateAttempted || b.timestamp || 0);
+            return dateB - dateA; // Sort newest to oldest
+          });
+
+          if (attempts.length === 0) {
+            historyContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <i class="fas fa-history fa-4x text-muted mb-4"></i>
+                            <h4 class="fw-bold mb-3">No Quiz Attempts Yet</h4>
+                            <p class="text-muted mb-4">
+                                Your quiz attempts will appear here once you complete some quizzes.
+                            </p>
+                            <button class="btn btn-primary" onclick="showUpload()">
+                                <i class="fas fa-rocket me-2"></i>Start Your First Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+          }
+
+          attempts.forEach((attempt) => {
+            // Format date
+            const date = new Date(
+              attempt.dateAttempted || attempt.timestamp || Date.now()
+            );
+            const dateStr = date.toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+            // Score as percent (score/total)
+            let score = "";
+            if (
+              typeof attempt.score === "number" &&
+              typeof attempt.total === "number" &&
+              attempt.total > 0
+            ) {
+              score = Math.round((attempt.score / attempt.total) * 100) + "%";
+            } else if (typeof attempt.score === "number") {
+              score = attempt.score;
+            } else {
+              score = "";
+            }
+            // Difficulty and types from details array
+            let difficulty = "";
+            let typeSet = new Set();
+            if (Array.isArray(attempt.details)) {
+              // If any question has a difficulty, use the first one
+              for (const q of attempt.details) {
+                if (q.difficulty && !difficulty) difficulty = q.difficulty;
+                if (q.type) typeSet.add(q.type);
+              }
+            }
+            // Map type codes to readable
+            const typeMap = {
+              mcq: "Multiple Choice",
+              truefalse: "True/False",
+              short: "Short Answer",
+            };
+            const questionTypes = Array.from(typeSet)
+              .map((t) => typeMap[t] || t)
+              .join(", ");
+            // Time taken (if available)
+            const timeTaken = attempt.timeTaken || "--";
+            // Card HTML
+            const historyCard = `
+              <div class="col-12">
+                <div class="ccard card shadow-sm border-0" style="background: linear-gradient(315deg, #4261ebd2 0%, #a955f7b9 70%, #764ba2 100%); color: white;">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h5 class="card-title fw-bold">${
+                        attempt.quizTitle || "Quiz #" + attempt.quizId
+                      }</h5>
+                      <p class="text-muted mb-0">Attempted on: <span class="fw-bold">${dateStr}</span></p>
+                    </div>
+                    <ul class="list-group list-group-flush mb-3" style="color: white;">
+                      <li class="list-group-item d-flex justify-content-between" style="background: transparent;">
+                        <span>Score</span>
+                        <span class="fw-bold">${score}</span>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between" style="background: transparent;">
+                        <span>Time Taken</span>
+                        <span class="fw-bold">${timeTaken}</span>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between" style="background: transparent;">
+                        <span>Difficulty</span>
+                        <span class="fw-bold">${difficulty}</span>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between" style="background: transparent;">
+                        <span>Question Types</span>
+                        <span class="fw-bold">${questionTypes}</span>
+                      </li>
+                    </ul>
+                    <div class="text-center">
+                      <button class="btn btn-outline-light btn-sm" onclick="showAttemptAnswers('${
+                        attempt.attemptId
+                      }')">
+                        <i class="fas fa-eye me-1"></i>Check Answers
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            historyContainer.innerHTML += historyCard;
+          });
+        } catch (err) {
+          historyContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Failed to load history. Please try again later.
+                </div>
+            </div>
+        `;
+        }
+      }
+
+      window.showAttemptAnswers = async function (attemptId) {
+        try {
+          const res = await fetch(`/api/attempt/${attemptId}`); // <-- fixed endpoint
+          const data = await res.json();
+          const attempt = data.attempt;
+          if (!attempt) {
+            alert("Attempt not found.");
+            return;
+          }
+          // Quiz title and date
+          document.getElementById("quizTitle").textContent =
+            attempt.quizTitle || "Quiz #" + attempt.quizId;
+          const date = new Date(
+            attempt.dateAttempted || attempt.timestamp || Date.now()
+          );
+          document.getElementById("attemptDate").textContent =
+            date.toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          // Questions and answers
+          const answersContainer = document.getElementById("answersContainer");
+          answersContainer.innerHTML = "";
+          (attempt.details || attempt.questions || []).forEach((q, idx) => {
+            const isCorrect =
+              q.isCorrect !== undefined
+                ? q.isCorrect
+                : q.userAnswer === q.correctAnswer;
+            const questionHTML = `
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                  <h5 class="fw-bold">${idx + 1}. ${q.text || q.question}</h5>
+                  <p><strong>Your Answer:</strong> ${q.userAnswer}</p>
+                  <p><strong>Correct Answer:</strong> ${q.correctAnswer}</p>
+                  <p class="${isCorrect ? "text-success" : "text-danger"}">
+                    <i class="fas ${
+                      isCorrect ? "fa-check-circle" : "fa-times-circle"
+                    } me-1"></i>
+                    ${isCorrect ? "Correct" : "Incorrect"}
+                  </p>
+                </div>
+              </div>
+            `;
+            answersContainer.innerHTML += questionHTML;
+          });
+          showSection("checkAnswers");
+        } catch (err) {
+          alert("Failed to load attempt answers.");
+        }
+      };
+
+      function checkAnswers(quizTitle) {
+        // Example data for the selected quiz
+        const attemptDate = "March 16, 2025";
+        const questions = [
+          {
+            text: "What is the primary function of mitochondria?",
+            userAnswer: "Energy production",
+            correctAnswer: "Energy production",
+          },
+          {
+            text: "Photosynthesis occurs in plant cells' chloroplasts.",
+            userAnswer: "True",
+            correctAnswer: "True",
+          },
+          {
+            text: "What is the chemical symbol for water?",
+            userAnswer: "H2O",
+            correctAnswer: "H2O",
+          },
+          {
+            text: "Which planet is known as the Red Planet?",
+            userAnswer: "Mars",
+            correctAnswer: "Mars",
+          },
+        ];
+
+        // Load the Check Answers page with the data
+        loadCheckAnswers(quizTitle, attemptDate, questions);
+      }
+
+      function loadCheckAnswers(quizTitle, attemptDate, questions) {
+        // Set the quiz title and attempt date
+        document.getElementById("quizTitle").textContent = quizTitle;
+        document.getElementById("attemptDate").textContent = attemptDate;
+
+        // Populate the answers container
+        const answersContainer = document.getElementById("answersContainer");
+        answersContainer.innerHTML = ""; // Clear existing content
+
+        questions.forEach((question, index) => {
+          const isCorrect = question.userAnswer === question.correctAnswer;
+          const questionHTML = `
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="fw-bold">${index + 1}. ${question.text}</h5>
+          <p><strong>Your Answer:</strong> ${question.userAnswer}</p>
+          <p><strong>Correct Answer:</strong> ${question.correctAnswer}</p>
+          <p class="${isCorrect ? "text-success" : "text-danger"}">
+            <i class="fas ${
+              isCorrect ? "fa-check-circle" : "fa-times-circle"
+            } me-1"></i>
+            ${isCorrect ? "Correct" : "Incorrect"}
+          </p>
+        </div>
+      </div>
+    `;
+          answersContainer.innerHTML += questionHTML;
+        });
+
+        // Show the Check Answers section
+        showSection("checkAnswers");
+      }
+
+      function goBackToHistory() {
+        showSection("history");
+        // loadHistory();
+      }
+
+      // Show admin dashboard by loading external HTML
+      function showAdminDashboard(role) {
+        showSection("adminDashboardContainer");
+        // Hide all main sections and admin dashboard
+        document
+          .querySelectorAll(
+            "main > section, #quizCreator, #quizSection, #adminDashboardContainer"
+          )
+          .forEach((el) => {
+            el.style.display = "none";
+          });
+        const container = document.getElementById("adminDashboardContainer");
+        container.style.display = "block";
+        container.innerHTML =
+          '<div class="text-center my-5"><div class="spinner-border"></div> Loading...</div>';
+
+        let url = "";
+        if (role === "prof") url = "prof.html";
+        if (role === "dean") url = "dean.html";
+
+        fetch(url)
+          .then((resp) => resp.text())
+          .then((html) => {
+            // Extract the content inside <body>
+            const bodyContent = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+            container.innerHTML = bodyContent ? bodyContent[1] : html;
+
+            // Remove any duplicate navbars from the injected content
+            const nav = container.querySelector("nav");
+            if (nav) nav.remove();
+
+            // Optionally, re-initialize any JS needed for charts, etc.
+            // This is a simple approach; for more complex dashboards, refactor scripts into reusable modules.
+            if (role === "prof") {
+              // Re-run the chart code for prof.html
+              if (window.Chart) {
+                const ctx = container.querySelector("#performanceChart");
+                if (ctx) {
+                  new Chart(ctx.getContext("2d"), {
+                    type: "bar",
+                    data: {
+                      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+                      datasets: [
+                        {
+                          label: "Average Scores",
+                          data: [65, 72, 68, 75],
+                          backgroundColor: "rgba(13, 110, 253, 0.5)",
+                        },
+                      ],
+                    },
+                    options: {
+                      responsive: true,
+                      scales: {
+                        y: { beginAtZero: true, max: 100 },
+                      },
+                    },
+                  });
+                }
+              }
+            } else if (role === "dean") {
+              // Re-run the chart code for dean.html
+              if (window.Chart) {
+                const ctx = container.querySelector("#courseChart");
+                if (ctx) {
+                  new Chart(ctx.getContext("2d"), {
+                    type: "line",
+                    data: {
+                      labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+                      datasets: [
+                        {
+                          label: "Average Scores",
+                          data: [65, 59, 80, 81, 56],
+                          borderColor: "#0d6efd",
+                          tension: 0.4,
+                        },
+                        {
+                          label: "Participation Rate",
+                          data: [75, 45, 60, 82, 69],
+                          borderColor: "#198754",
+                          tension: 0.4,
+                        },
+                      ],
+                    },
+                    options: {
+                      responsive: true,
+                      plugins: { legend: { position: "top" } },
+                    },
+                  });
+                }
+              }
+            }
+          });
+      }
+
+      // --- Quiz Creation Integration ---
+      let extractedText = "";
+      let selectedQuestionType = "Mixed Format";
+      let selectedDifficulty = "Auto";
+
+      // Handle quiz parameter selection
+      const questionTypeSelect = document.querySelector(".form-select.mt-2");
+      if (questionTypeSelect) {
+        questionTypeSelect.addEventListener("change", (e) => {
+          selectedQuestionType = e.target.value;
+        });
+      }
+      const difficultyBtns = document.querySelectorAll(
+        ".list-group-item .btn-group.w-100.mt-2 .btn"
+      );
+      difficultyBtns.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          difficultyBtns.forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          selectedDifficulty = this.textContent.trim();
+        });
+      });
+
+      // File upload integration (reuse existing dropZone and fileInput)
+      if (dropZone && fileInput) {
+        dropZone.addEventListener("click", () => fileInput.click());
+        fileInput.addEventListener("change", (e) => {
+          if (e.target.files.length > 0) {
+            uploadFileToBackend(e.target.files[0]);
+          }
+        });
+        dropZone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          if (e.dataTransfer.files.length > 0) {
+            uploadFileToBackend(e.dataTransfer.files[0]);
+          }
+          dropZone.style.borderColor = "#dee2e6";
+        });
+      }
+
+      async function uploadFileToBackend(file) {
+        dropZone.innerHTML = `<div class="spinner-border text-primary mb-2"></div><p>Analyzing ${file.name}...</p>`;
+        const formData = new FormData();
+        formData.append("file", file);
+        try {
+          const res = await fetch(`http://localhost:${process.env.PORT}/api/upload`, {
+            method: "POST",
+            body: formData,
+          });
+          const data = await res.json();
+          if (data.text) {
+            extractedText = data.text;
+            dropZone.innerHTML = `<i class="fas fa-check-circle text-success fa-2x mb-2"></i><p>File processed. Ready to generate quiz.</p>`;
+          } else {
+            dropZone.innerHTML = `<p class="text-danger">Failed to extract text.</p>`;
+          }
+        } catch (err) {
+          dropZone.innerHTML = `<p class="text-danger">Upload error.</p>`;
+        }
+      }
+
+      // Text input integration
+      const textEditor = document.querySelector("#textEditor textarea");
+      if (textEditor) {
+        textEditor.addEventListener("input", (e) => {
+          extractedText = e.target.value;
+        });
+      }
+
+      // Generate Quiz button integration
+      const generateQuizBtn = document.getElementById("generateQuizBtn");
+      if (generateQuizBtn) {
+        generateQuizBtn.addEventListener("click", async function (e) {
+          e.preventDefault();
+          console.log("=== Generate Quiz button clicked ===");
+
+          if (!extractedText || extractedText.trim().length < 10) {
+            alert("Please upload a file or enter some text.");
+            return;
+          }
+          this.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Generating...`;
+          this.disabled = true;
+          try {
+            console.log("Sending request to generate quiz...");
+            const res = await fetch(`http://localhost:${process.env.PORT}/api/generate-quiz`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                text: extractedText,
+                questionType: selectedQuestionType,
+                difficulty: selectedDifficulty,
+              }),
+            });
+
+            console.log("Response received:", res.status, res.ok);
+            const data = await res.json();
+            console.log("Response data:", data);
+            console.log("Quiz ID from response:", data.id);
+
+            if (
+              data.quiz &&
+              (Array.isArray(data.quiz) ||
+                (typeof data.quiz === "object" && data.quiz !== null))
+            ) {
+              window.generatedQuiz = Array.isArray(data.quiz)
+                ? data.quiz
+                : Object.values(data.quiz);
+              quizId = data.id || null;
+              window.quizId = quizId; // Make sure we set window.quizId
+
+              console.log("Quiz ID assigned:", quizId);
+              console.log("Window quiz ID:", window.quizId);
+              console.log("Generated quiz stored:", window.generatedQuiz);
+
+              // Extract types and difficulty from the generated quiz if available
+              let types = new Set();
+              let difficulty = new Set();
+              window.generatedQuiz.forEach((q) => {
+                if (q.type) types.add(q.type);
+                if (q.difficulty) difficulty.add(q.difficulty);
+              });
+              // Map type codes to readable names
+              const typeMap = {
+                mcq: "Multiple Choice",
+                truefalse: "True/False",
+                short: "Short Answer",
+              };
+              const readableTypes = types.size
+                ? Array.from(types)
+                    .map((t) => typeMap[t] || t)
+                    .join(", ")
+                : selectedQuestionType;
+              const readableDifficulty = difficulty.size
+                ? Array.from(difficulty).join(", ")
+                : selectedDifficulty;
+              // Fill in the quiz details section
+              document.getElementById("quizQuestionCount").textContent =
+                window.generatedQuiz.length;
+              document.getElementById("quizQuestionTypes").textContent =
+                readableTypes;
+              document.getElementById("quizDifficulty").textContent =
+                readableDifficulty;
+              // Optionally update the share link with the quiz id
+              if (data.id) {
+                document.querySelector(
+                  ".share-link"
+                ).textContent = `https://studyquizpro.com/quiz/${data.id}`;
+                console.log("Share link updated with quiz ID:", data.id);
+              }
+              showSection("quizDetails");
+            } else {
+              console.error(
+                "Quiz generation failed - invalid quiz data:",
+                data
+              );
+              alert("Quiz generation failed.");
+            }
+          } catch (err) {
+            console.error("Error generating quiz:", err);
+            alert("Error generating quiz.");
+          }
+          this.innerHTML = `<i class="fas fa-sparkles me-2"></i>Generate Smart Quiz`;
+          this.disabled = false;
+        });
+      }
+
+      // Start Quiz button integration
+      function startQuiz() {
+        console.log("=== startQuiz() called ===");
+        console.log("Current quiz ID:", window.quizId);
+
+        const quiz = window.generatedQuiz;
+        console.log("Generated quiz data:", quiz);
+
+        if (!quiz) {
+          console.error("No quiz data available!");
+          return;
+        }
+
+        console.log("Quiz details:", {
+          quizId: window.quizId,
+          numberOfQuestions: quiz.length,
+          firstQuestion: quiz[0],
+        });
+
+        const quizContainer = document.getElementById("quizQuestions");
+        quizContainer.innerHTML = "";
+        quiz.forEach((q, idx) => {
+          let html = `<div class="question-card mb-4 p-3 bg-white rounded shadow-sm">`;
+          html += `<p class="fw-bold mb-3">${idx + 1}. ${q.question}</p>`;
+          if (q.type === "mcq" && Array.isArray(q.options)) {
+            html += '<div class="ms-3">';
+            q.options.forEach((opt, i) => {
+              html += `<div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="q${idx}" value="${opt}">
+                <label class="form-check-label">${opt}</label>
+              </div>`;
+            });
+            html += "</div>";
+          } else if (q.type === "truefalse") {
+            html += `<div class="btn-group" role="group">
+              <input type="radio" class="btn-check" name="q${idx}" id="q${idx}true" value="True">
+              <label class="btn btn-outline-success" for="q${idx}true">True</label>
+              <input type="radio" class="btn-check" name="q${idx}" id="q${idx}false" value="False">
+              <label class="btn btn-outline-danger" for="q${idx}false">False</label>
+            </div>`;
+          } else {
+            html += `<input type="text" class="form-control" name="q${idx}" placeholder="Your answer">`;
+          }
+          html += "</div>";
+          quizContainer.innerHTML += html;
+        });
+
+        console.log("Quiz questions rendered successfully");
+        console.log("Final quiz ID before showing section:", window.quizId);
+
+        showSection("quizSection");
+        startTimer();
+
+        console.log("=== startQuiz() completed ===");
+      }
+    </script>
+  </body>
+</html>
