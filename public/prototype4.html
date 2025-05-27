@@ -737,6 +737,11 @@
         </div>
       </section>
 
+      <section id="deanDashboard" class="my-5" style="display: none;">
+        <h2 class="fw-bold mb-4"><i class="fas fa-tachometer-alt me-2"></i>Dean Dashboard</h2>
+        <iframe src="dean.html" style="width:100%;height:800px;border:none;" id="deanDashboardIframe"></iframe>
+      </section>
+
       <section
         id="progressDashboard"
         class="container my-5"
@@ -1235,17 +1240,20 @@
         const role = user ? user.role : null;
         if (sectionId === "dashboard") {
           console.log("Showing dashboard section, role:", role);
-          if (role === "student" || role === null) {
-            console.log("Student/null role - calling loadDashboard()");
+          const isDeanTest = localStorage.getItem("forceDeanDashboard") === "true" || window.location.search.includes("deanTest=true");
+          if (role === "student" || (role === null && !isDeanTest)) {
+            console.log("Student/null role - showing student dashboard");
             loadDashboard();
             document.getElementById("dashboard").style.display = "block";
-          } else {
-            if (role === "professor") {
-              showAdminDashboard("prof");
-            } else if (role === "dean") {
-              showAdminDashboard("dean");
-            }
-            return;
+            document.getElementById("adminDashboardContainer").style.display = "none";
+          } else if (role === "professor" && !isDeanTest) {
+            console.log("Professor role - showing professor dashboard");
+            showAdminDashboard("prof");
+          } else if (role === "dean" || isDeanTest) {
+            console.log("Dean role or test mode - showing dean dashboard");
+            showAdminDashboard("dean");
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("adminDashboardContainer").style.display = "block";
           }
         }
         window.scrollTo(0, 0);
@@ -2182,97 +2190,50 @@
 
       // Show admin dashboard by loading external HTML
       function showAdminDashboard(role) {
-        showSection("adminDashboardContainer");
-        // Hide all main sections and admin dashboard
-        document
-          .querySelectorAll(
-            "main > section, #quizCreator, #quizSection, #adminDashboardContainer"
-          )
-          .forEach((el) => {
-            el.style.display = "none";
-          });
-        const container = document.getElementById("adminDashboardContainer");
-        container.style.display = "block";
-        container.innerHTML =
-          '<div class="text-center my-5"><div class="spinner-border"></div> Loading...</div>';
+            showSection("adminDashboardContainer");
+            document
+              .querySelectorAll("main > section, #quizCreator, #quizSection, #adminDashboardContainer")
+              .forEach((el) => {
+                el.style.display = el.id === "adminDashboardContainer" ? "block" : "none";
+              });
+            const container = document.getElementById("adminDashboardContainer");
+            container.style.display = "block";
+            container.innerHTML = '<div class="text-center my-5"><div class="spinner-border"></div> Loading...</div>';
 
-        let url = "";
-        if (role === "prof") url = "prof.html";
-        if (role === "dean") url = "dean.html";
+            let url = "";
+            if (role === "prof") url = "prof.html";
+            if (role === "dean") url = "dean.html";
 
-        fetch(url)
-          .then((resp) => resp.text())
-          .then((html) => {
-            // Extract the content inside <body>
-            const bodyContent = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-            container.innerHTML = bodyContent ? bodyContent[1] : html;
+            fetch(url)
+              .then((resp) => resp.text())
+              .then((html) => {
+                const bodyContent = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+                container.innerHTML = bodyContent ? bodyContent[1] : html;
 
-            // Remove any duplicate navbars from the injected content
-            const nav = container.querySelector("nav");
-            if (nav) nav.remove();
+                const nav = container.querySelector("nav");
+                if (nav) nav.remove();
 
-            // Optionally, re-initialize any JS needed for charts, etc.
-            // This is a simple approach; for more complex dashboards, refactor scripts into reusable modules.
-            if (role === "prof") {
-              // Re-run the chart code for prof.html
-              if (window.Chart) {
-                const ctx = container.querySelector("#performanceChart");
-                if (ctx) {
-                  new Chart(ctx.getContext("2d"), {
-                    type: "bar",
-                    data: {
-                      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-                      datasets: [
-                        {
-                          label: "Average Scores",
-                          data: [65, 72, 68, 75],
-                          backgroundColor: "rgba(13, 110, 253, 0.5)",
-                        },
-                      ],
-                    },
-                    options: {
-                      responsive: true,
-                      scales: {
-                        y: { beginAtZero: true, max: 100 },
-                      },
-                    },
-                  });
+                const scripts = container.getElementsByTagName("script");
+                for (let script of scripts) {
+                  const newScript = document.createElement("script");
+                  if (script.src) {
+                    newScript.src = script.src;
+                  } else {
+                    newScript.textContent = script.textContent;
+                  }
+                  document.body.appendChild(newScript);
                 }
-              }
-            } else if (role === "dean") {
-              // Re-run the chart code for dean.html
-              if (window.Chart) {
-                const ctx = container.querySelector("#courseChart");
-                if (ctx) {
-                  new Chart(ctx.getContext("2d"), {
-                    type: "line",
-                    data: {
-                      labels: ["Jan", "Feb", "Mar", "Apr", "May"],
-                      datasets: [
-                        {
-                          label: "Average Scores",
-                          data: [65, 59, 80, 81, 56],
-                          borderColor: "#0d6efd",
-                          tension: 0.4,
-                        },
-                        {
-                          label: "Participation Rate",
-                          data: [75, 45, 60, 82, 69],
-                          borderColor: "#198754",
-                          tension: 0.4,
-                        },
-                      ],
-                    },
-                    options: {
-                      responsive: true,
-                      plugins: { legend: { position: "top" } },
-                    },
-                  });
+
+                // Force loadDashboard if role is dean
+                if (role === "dean" && typeof loadDashboard === "function") {
+                  loadDashboard();
                 }
-              }
-            }
-          });
-      }
+              })
+              .catch((err) => {
+                console.error("Error loading admin dashboard:", err);
+                container.innerHTML = '<div class="alert alert-danger">Failed to load dashboard.</div>';
+              });
+          }
 
       // --- Quiz Creation Integration ---
       let extractedText = "";

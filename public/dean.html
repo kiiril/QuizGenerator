@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduAnalytics Pro - Faculty Dashboard</title>
+    <title>Dean Analytics Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -36,13 +36,13 @@
         <div class="container">
             <a class="navbar-brand" href="#">EduAnalytics Pro</a>
             <div class="d-flex align-items-center">
-                <span class="text-white me-3">Faculty Admin Dashboard</span>
+                <span class="text-white me-3">Dean Dashboard</span>
                 <div class="dropdown">
                     <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         Menu
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="prototype.html">Student View</a></li>
+                        <li><a class="dropdown-item" href="prototype4.html">Student View</a></li>
                         <li><a class="dropdown-item" href="prof.html">Professor View</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" onclick="logout()">Log Out</a></li>
@@ -55,32 +55,34 @@
     <!-- Dashboard Content -->
     <div class="container mt-4">
         <div class="row g-4">
-            <!-- Real-Time Summary -->
+            <!-- Faculty Adoption Rate -->
             <div class="col-md-3">
                 <div class="data-card shadow-sm">
                     <h6>Faculty Adoption Rate</h6>
                     <div class="mt-3">
-                        <span class="fs-2">68%</span>
+                        <span class="fs-2" id="adoptionRate">0%</span>
                         <div class="progress mt-2">
-                            <div class="progress-bar bg-success" style="width: 68%"></div>
+                            <div class="progress-bar bg-success" id="adoptionProgress" style="width: 0%"></div>
                         </div>
-                        <small class="text-muted">+12% this month</small>
+                        <small class="text-muted" id="adoptionTrend">+0% this month</small>
                     </div>
                 </div>
             </div>
 
+            <!-- Active Courses -->
             <div class="col-md-3">
                 <div class="data-card shadow-sm">
                     <h6>Active Courses</h6>
                     <div class="mt-3">
-                        <span class="fs-2">23</span>
+                        <span class="fs-2" id="activeCourses">0</span>
                         <div class="mt-2">
-                            <span class="badge bg-primary metric-badge">5 New This Week</span>
+                            <span class="badge bg-primary metric-badge" id="newCourses">0 New This Week</span>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Institutional Health Monitor (Static for now)
             <div class="col-md-6">
                 <div class="data-card shadow-sm">
                     <h6>Institutional Health Monitor</h6>
@@ -99,7 +101,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Course Analytics -->
             <div class="col-md-8">
@@ -109,7 +111,7 @@
                 </div>
             </div>
 
-            <!-- Faculty Engagement -->
+            <!-- Department Engagement -->
             <div class="col-md-4">
                 <div class="data-card shadow-sm">
                     <h6>Department Engagement</h6>
@@ -121,36 +123,18 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Computer Science</td>
-                                <td>92%</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td>Mathematics</td>
-                                <td>45%</td>
-                                <td><span class="badge bg-warning">Partial</span></td>
-                            </tr>
-                            <tr>
-                                <td>Physics</td>
-                                <td>32%</td>
-                                <td><span class="badge bg-danger">Low</span></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="deptTableBody"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Student Performance -->
+            <!-- At-Risk Students -->
             <div class="col-12">
                 <div class="data-card shadow-sm mb-2">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6>At-Risk Students Overview</h6>
-                        <select class="form-select w-25">
-                            <option>All Courses</option>
-                            <option>Computer Science</option>
-                            <option>Mathematics</option>
+                        <select class="form-select w-25" id="atRiskCourseFilter">
+                            <option value="">All Courses</option>
                         </select>
                     </div>
                     <table class="table hover-table mt-3">
@@ -163,122 +147,312 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>Discrete Math</td>
-                                <td>48%</td>
-                                <td><span class="text-danger">▼ 22%</span></td>
-                                <td><button class="btn btn-sm btn-outline-primary">Flag for Support</button></td>
-                            </tr>
-                            <tr>
-                                <td>Jane Doe</td>
-                                <td>Systems 1</td>
-                                <td>33%</td>
-                                <td><span class="text-danger">▼ 42%</span></td>
-                                <td><button class="btn btn-sm btn-outline-primary">Flag for Support</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-12 mb-4">
-                <div class="data-card shadow-sm mb-2">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h6>High Performing Students Overview</h6>
-                        <select class="form-select w-25">
-                            <option>All Courses</option>
-                            <option>Computer Science</option>
-                            <option>Mathematics</option>
-                        </select>
-                    </div>
-                    <table class="table hover-table mt-3">
-                        <thead>
-                            <tr>
-                                <th>Student</th>
-                                <th>Course</th>
-                                <th>Last Quiz Score</th>
-                                <th>Engagement Trend</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>TCS 3</td>
-                                <td>95%</td>
-                                <td><span class="text-success">▲ 25%</span></td>
-                                <td><button class="btn btn-sm btn-outline-primary">Flag for Praise</button></td>
-                            </tr>
-                            <tr>
-                                <td>Jane Doe</td>
-                                <td>Systems 3</td>
-                                <td>89%</td>
-                                <td><span class="text-success">▲ 20%</span></td>
-                                <td><button class="btn btn-sm btn-outline-primary">Flag for Praise</button></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="atRiskTableBody"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- System Integration -->
-            
-            
+            <!-- High-Performing Students -->
+            <div class="col-12 mb-4">
+                <div class="data-card shadow-sm mb-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6>High Performing Students Overview</h6>
+                        <select class="form-select w-25" id="highPerfCourseFilter">
+                            <option value="">All Courses</option>
+                        </select>
+                    </div>
+                    <table class="table hover-table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Last Quiz Score</th>
+                                <th>Engagement Trend</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="highPerfTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Course Performance Chart
-        const ctx = document.getElementById('courseChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                datasets: [{
-                    label: 'Average Scores',
-                    data: [65, 59, 80, 81, 56],
-                    borderColor: '#0d6efd',
-                    tension: 0.4
-                },
-                {
-                    label: 'Participation Rate',
-                    data: [75, 45, 60, 82, 69],
-                    borderColor: '#198754',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
-                }
-            }
-        });
-
-        // Real-time updates simulation
-        setInterval(() => {
-            document.querySelectorAll('.metric-badge').forEach(badge => {
-                const random = Math.floor(Math.random() * 10);
-                badge.textContent = `${random} New This Week`;
-            });
-        }, 10000);
-
-        // Add authentication check
-        document.addEventListener('DOMContentLoaded', () => {
+        const API_BASE_URL = 'http://localhost:5001';
+        const token = localStorage.getItem('token');
+        
+        document.addEventListener('DOMContentLoaded', async () => {
             const user = JSON.parse(localStorage.getItem('user'));
             if (!user || user.role !== 'dean') {
                 window.location.href = 'loginPage.html';
+                return;
             }
+            await loadDashboard();
         });
-
+        
+        async function loadDashboard() {
+            try {
+                console.log('Fetching courses from:', `${API_BASE_URL}/api/courses/1`);
+                const courseRes = await fetch(`${API_BASE_URL}/api/courses/1`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!courseRes.ok) {
+                    const errorText = await courseRes.text();
+                    console.error('Course fetch failed:', courseRes.status, errorText);
+                    throw new Error(`Failed to fetch courses: ${courseRes.status} ${errorText}`);
+                }
+                const { courses } = await courseRes.json();
+                console.log('Fetched courses:', courses);
+        
+                console.log('Fetching attempts from:', `${API_BASE_URL}/api/attempts`);
+                const attemptRes = await fetch(`${API_BASE_URL}/api/attempts`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!attemptRes.ok) {
+                    const errorText = await attemptRes.text();
+                    console.error('Attempt fetch failed:', attemptRes.status, errorText);
+                    throw new Error(`Failed to fetch attempts: ${attemptRes.status} ${errorText}`);
+                }
+                const { attempts } = await attemptRes.json();
+                console.log('Fetched attempts:', attempts);
+        
+                // Assign default userId for null userIds
+                const studentIds = courses.flatMap(c => c.studentIds);
+                const fixedAttempts = attempts.map((a, i) => ({
+                    ...a,
+                    userId: a.userId || studentIds[i % studentIds.length]
+                }));
+        
+                // Populate course dropdowns
+                const courseOptions = courses.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
+                document.getElementById('atRiskCourseFilter').innerHTML += courseOptions;
+                document.getElementById('highPerfCourseFilter').innerHTML += courseOptions;
+        
+                // Faculty Adoption Rate
+                const coursesWithAttempts = new Set(fixedAttempts.map(a => {
+                    const quiz = quizModel.find(q => q.id === a.quizId);
+                    return quiz ? quiz.courseId : null;
+                }).filter(id => id)).size;
+                const adoptionRate = courses.length ? Math.round((coursesWithAttempts / courses.length) * 100) : 0;
+                document.getElementById('adoptionRate').textContent = `${adoptionRate}%`;
+                document.getElementById('adoptionProgress').style.width = `${adoptionRate}%`;
+                document.getElementById('adoptionTrend').textContent = `+${Math.round(adoptionRate * 0.1)}% this month`;
+        
+                // Active Courses
+                document.getElementById('activeCourses').textContent = courses.length;
+                document.getElementById('newCourses').textContent = '0 New This Week';
+        
+                // Department Engagement
+                const departments = {
+                    'BIO': { name: 'Biology', attempts: [], students: 0 },
+                    'MATH': { name: 'Mathematics', attempts: [], students: 0 },
+                    'LIT': { name: 'Literature', attempts: [], students: 0 }
+                };
+                for (const course of courses) {
+                    const dept = course.code.slice(0, 3);
+                    if (departments[dept]) {
+                        const students = await fetchStudents(course.id);
+                        departments[dept].students += students.length;
+                        const courseAttempts = fixedAttempts.filter(a => {
+                            const quiz = quizModel.find(q => q.id === a.quizId);
+                            return quiz && quiz.courseId === course.id;
+                        });
+                        departments[dept].attempts.push(...courseAttempts);
+                    }
+                }
+                const deptTableBody = Object.entries(departments).map(([code, dept]) => {
+                    const usage = dept.students ? Math.round((dept.attempts.length / dept.students) * 100) : 0;
+                    const status = usage > 80 ? 'Active' : usage > 40 ? 'Partial' : 'Low';
+                    const badgeClass = usage > 80 ? 'bg-success' : usage > 40 ? 'bg-warning' : 'bg-danger';
+                    return `
+                        <tr>
+                            <td>${dept.name}</td>
+                            <td>${usage}%</td>
+                            <td><span class="badge ${badgeClass}">${status}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+                document.getElementById('deptTableBody').innerHTML = deptTableBody;
+        
+                // Course Performance Chart
+                const chartData = courses.map(c => {
+                    const courseAttempts = fixedAttempts.filter(a => {
+                        const quiz = quizModel.find(q => q.id === a.quizId);
+                        return quiz && quiz.courseId === c.id;
+                    });
+                    const avgScore = courseAttempts.length 
+                        ? courseAttempts.reduce((sum, a) => sum + (a.score / a.total * 100), 0) / courseAttempts.length
+                        : 0;
+                    const participation = courseAttempts.length ? (courseAttempts.length / dept.students * 100) : 0;
+                    return { title: c.title, avgScore, participation };
+                });
+                new Chart(document.getElementById('courseChart').getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: chartData.map(c => c.title.slice(0, 10)),
+                        datasets: [
+                            {
+                                label: 'Average Scores',
+                                data: chartData.map(c => c.avgScore),
+                                borderColor: '#0d6efd',
+                                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Participation Rate',
+                                data: chartData.map(c => c.participation),
+                                borderColor: '#198754',
+                                backgroundColor: 'rgba(25, 135, 84, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: { y: { beginAtZero: true, max: 100 } },
+                        plugins: { legend: { position: 'top' } }
+                    }
+                });
+        
+                // Load Student Tables
+                await loadStudentTables(courses, fixedAttempts);
+            } catch (err) {
+                console.error('Dashboard load error:', err);
+                alert('Error Loading Dashboard\nCould not retrieve the necessary data. Please try again later or contact support.\n\nDetails: ' + err.message);
+            }
+        }
+        
+        async function fetchStudents(courseId) {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/courses/${courseId}/students`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error(`Failed to fetch students: ${res.status}`);
+                const { students } = await res.json();
+                return students;
+            } catch (err) {
+                console.error('Fetch students error:', err);
+                return [];
+            }
+        }
+        
+        async function loadStudentTables(courses, attempts) {
+            const studentProgress = [];
+            for (const course of courses) {
+                const students = await fetchStudents(course.id);
+                for (const student of students) {
+                    const studentAttempts = attempts.filter(a => a.userId === student.id);
+                    if (!studentAttempts.length) continue;
+                    const avgScore = studentAttempts.length 
+                        ? studentAttempts.reduce((sum, a) => sum + (a.score / a.total * 100), 0) / studentAttempts.length
+                        : 0;
+                    const lastAttempt = studentAttempts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
+                    studentProgress.push({
+                        name: student.name || `Student ${student.id}`,
+                        course: course.title,
+                        avgScore,
+                        lastScore: lastAttempt ? (lastAttempt.score / lastAttempt.total * 100) : 0,
+                        trend: studentAttempts.length > 1 
+                            ? studentAttempts[0].score / studentAttempts[0].total > studentAttempts[1].score / studentAttempts[1].total
+                                ? 'up' : 'down'
+                            : 'stable',
+                        courseId: course.id
+                    });
+                }
+            }
+        
+            const atRiskStudents = studentProgress.filter(s => s.avgScore < 50);
+            document.getElementById('atRiskTableBody').innerHTML = atRiskStudents.map(s => `
+                <tr>
+                    <td>${s.name}</td>
+                    <td>${s.course}</td>
+                    <td>${s.lastScore.toFixed(1)}%</td>
+                    <td><span class="text-${s.trend === 'up' ? 'success' : 'danger'}">${s.trend === 'up' ? '▲' : '▼'} ${s.avgScore.toFixed(1)}%</span></td>
+                    <td><button class="btn btn-sm btn-outline-primary" onclick="flagStudent('${s.name}', 'support')">Flag for Support</button></td>
+                </tr>
+            `).join('');
+        
+            const highPerfStudents = studentProgress.filter(s => s.avgScore >= 80);
+            document.getElementById('highPerfTableBody').innerHTML = highPerfStudents.map(s => `
+                <tr>
+                    <td>${s.name}</td>
+                    <td>${s.course}</td>
+                    <td>${s.lastScore.toFixed(1)}%</td>
+                    <td><span class="text-${s.trend === 'up' ? 'success' : 'danger'}">${s.trend === 'up' ? '▲' : '▼'} ${s.avgScore.toFixed(1)}%</span></td>
+                    <td><button class="btn btn-sm btn-outline-primary" onclick="flagStudent('${s.name}', 'praise')">Flag for Praise</button></td>
+                </tr>
+            `).join('');
+        
+            document.getElementById('atRiskCourseFilter').addEventListener('change', () => {
+                const courseId = document.getElementById('atRiskCourseFilter').value;
+                const filtered = courseId 
+                    ? atRiskStudents.filter(s => s.courseId == courseId)
+                    : atRiskStudents;
+                document.getElementById('atRiskTableBody').innerHTML = filtered.map(s => `
+                    <tr>
+                        <td>${s.name}</td>
+                        <td>${s.course}</td>
+                        <td>${s.lastScore.toFixed(1)}%</td>
+                        <td><span class="text-${s.trend === 'up' ? 'success' : 'danger'}">${s.trend === 'up' ? '▲' : '▼'} ${s.avgScore.toFixed(1)}%</span></td>
+                        <td><button class="btn btn-sm btn-outline-primary" onclick="flagStudent('${s.name}', 'support')">Flag for Support</button></td>
+                    </tr>
+                `).join('');
+            });
+        
+            document.getElementById('highPerfCourseFilter').addEventListener('change', () => {
+                const courseId = document.getElementById('highPerfCourseFilter').value;
+                const filtered = courseId 
+                    ? highPerfStudents.filter(s => s.courseId == courseId)
+                    : highPerfStudents;
+                document.getElementById('highPerfTableBody').innerHTML = filtered.map(s => `
+                    <tr>
+                        <td>${s.name}</td>
+                        <td>${s.course}</td>
+                        <td>${s.lastScore.toFixed(1)}%</td>
+                        <td><span class="text-${s.trend === 'up' ? 'success' : 'danger'}">${s.trend === 'up' ? '▲' : '▼'} ${s.avgScore.toFixed(1)}%</span></td>
+                    <td><button class="btn btn-sm btn-outline-primary" onclick="flagStudent('${s.name}', 'praise')">Flag for Praise</button></td>
+                </tr>
+                `).join('');
+            });
+        }
+        
+        async function flagStudent(name, action) {
+            try {
+                await fetch(`${API_BASE_URL}/api/dean/flag-student`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ name, action })
+                });
+                alert(`Flagged ${name} for ${action}`);
+            } catch (err) {
+                console.error('Flag error:', err);
+                alert('Failed to flag student');
+            }
+        }
+        
         function logout() {
             localStorage.removeItem('user');
+            localStorage.removeItem('token');
             window.location.href = 'loginPage.html';
         }
-    </script>
+        
+        const quizModel = {
+            find: id => {
+                const quizzes = [
+                    { id: 'zF-7VRP3c-oR7rGlLVILZ', courseId: 101 },
+                    { id: 'Bhsr19C503PBQM4ckd6Fw', courseId: 102 },
+                    { id: 'wEOCD0cGC8dB2fZkAwJ1G', courseId: 103 }
+                ];
+                return quizzes.find(q => q.id === id);
+            }
+        };
+        </script>
 </body>
 </html>
