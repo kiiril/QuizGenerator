@@ -9,6 +9,7 @@ exports.uploadFile = async (req, res) => {
   try {
     const file = req.file;
     if (!file) return res.status(400).json({ error: 'No file uploaded' });
+    console.log("File", file)
     const text = await extractTextFromFile(file);
     res.json({ text });
   } catch (err) {

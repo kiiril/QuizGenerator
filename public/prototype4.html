@@ -320,6 +320,7 @@
                 <label class="form-label fw-bold">Content Source</label>
                 <div class="btn-group w-100 shadow">
                   <button
+                    id="uploadButton"
                     class="btn btn-outline-primary active"
                     onclick="toggleSource('upload')"
                   >
@@ -1260,7 +1261,6 @@
       }
 
       // Input source handling
-      // Input source handling
       function toggleSource(source) {
         document
           .querySelectorAll("#uploadSection, #textEditor")
@@ -1313,6 +1313,7 @@
       });
 
       function handleFiles(files) {
+        console.log("files", files)
         if (files.length > 0) {
           // Simulate file processing
           dropZone.innerHTML = `
@@ -1320,7 +1321,7 @@
                     <p>Analyzing ${files[0].name}...</p>
                 `;
           setTimeout(() => {
-            document.querySelector(".btn-outline-primary.active").click();
+            // document.querySelector(".btn-outline-primary.active").click();
             showQuizCustomization();
           }, 1500);
         }
@@ -2280,7 +2281,7 @@
         const formData = new FormData();
         formData.append("file", file);
         try {
-          const res = await fetch(`http://localhost:${process.env.PORT}/api/upload`, {
+          const res = await fetch(`http://localhost:9999/api/upload`, {
             method: "POST",
             body: formData,
           });
@@ -2319,7 +2320,7 @@
           this.disabled = true;
           try {
             console.log("Sending request to generate quiz...");
-            const res = await fetch(`http://localhost:${process.env.PORT}/api/generate-quiz`, {
+            const res = await fetch(`http://localhost:9999/api/generate-quiz`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({

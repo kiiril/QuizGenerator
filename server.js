@@ -20,5 +20,5 @@ const courseRoutes = require('./routes/courseRoutes');
 app.use('/api', quizRoutes);
 app.use('/api', courseRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 9999;
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
